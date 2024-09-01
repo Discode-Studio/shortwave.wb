@@ -40,6 +40,7 @@ jobs:
         run: |
           firebase login
           firebase init
+          firebase deploy
          
       - name: Setup Pages
         uses: actions/configure-pages@v5
