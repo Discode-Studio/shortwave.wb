@@ -2,7 +2,7 @@
 name: Deploy to Firebase and GitHub Pages
 
 on:
-  # Runs on pushes to the default branch
+  # Runs on pushes to the default branch 
   push:
     branches: ["main"]
 
