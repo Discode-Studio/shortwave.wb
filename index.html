@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Afficher les données Firebase</title>
+  <!-- Import Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBiwCxX52J4bF7iYN8V7Jsm1TeJ0P8U27U",
+      authDomain: "uvb-76.firebaseapp.com",
+      databaseURL: "https://uvb-76-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "uvb-76",
+      storageBucket: "uvb-76.appspot.com",
+      messagingSenderId: "1056404416263",
+      appId: "1:1056404416263:web:d4430ecbdefde9119507a2",
+      measurementId: "G-4BFF709SN6"
+    };
 
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const analytics = firebase.analytics();
+
+    // Fonction pour récupérer et afficher les données
+    function fetchData() {
+      const dataContainer = document.getElementById("dataContainer");
+      dataContainer.innerHTML = "Chargement des données..."; // Message de chargement
+
+      // Récupérer les données de Firebase
+      database.ref('stations').once('value', (snapshot) => {
+        const data = snapshot.val();
+
+        if (!data) {
+          dataContainer.innerHTML = "Aucune donnée trouvée.";
+          return;
+        }
+
+        dataContainer.innerHTML = ""; // Effacer le message de chargement
+
+        // Parcourir les données et les afficher
+        for (let key in data) {
+          const entry = data[key].entry;
+
+          // Créer un paragraphe pour chaque entrée
+          const paragraph = document.createElement("p");
+          paragraph.textContent = entry;
+
+          // Ajouter l'entrée dans le conteneur
+          dataContainer.appendChild(paragraph);
+        }
+      }).catch((error) => {
+        dataContainer.innerHTML = "Erreur lors du chargement des données : " + error.message;
+      });
+    }
+
+    // Charger les données dès que la page est chargée
+    window.onload = fetchData;
+  </script>
+</head>
+<body>
+
+  <h2>Données envoyées à Firebase</h2>
+
+  <div id="dataContainer">
+    <!-- Les données de Firebase seront affichées ici -->
+  </div>
+
+</body>
+    </html>
