@@ -35,6 +35,11 @@ jobs:
       - name: firebase
         run: |
           install -g firebase-tools
+
+      - name: firebase login
+        run: |
+          firebase login
+          firebase init
          
       - name: Setup Pages
         uses: actions/configure-pages@v5
