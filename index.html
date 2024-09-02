@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Main page › Signabroam</title>
-    <link rel="stylesheet" href="getout.css"> <!-- Ceci charge le fichier CSS séparé -->
+    <link rel="stylesheet" href="getout.css"> <!-- Lien vers le fichier CSS -->
     <meta property="og:title" content="Signabroam">
     <meta property="og:description" content="This website is make for purpose things like informations and bots about Shortwaves and Numbers Stations.">
 </head>
@@ -32,10 +32,46 @@
 
         <section class="content">
             <h3>Last frequency update</h3>
+            <!-- Section pour afficher les messages récupérés dans une boîte défilante -->
             <div id="messages"></div>
 
+            <!-- Script Firebase pour afficher les messages -->
             <script type="module">
-                // Firebase script (non modifié)
+                // Import the functions you need from the SDKs you need
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+                import { getDatabase, ref, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+                // Your web app's Firebase configuration
+                const firebaseConfig = {
+                    apiKey: "AIzaSyBiwCxX52J4bF7iYN8V7Jsm1TeJ0P8U27U",
+                    authDomain: "uvb-76.firebaseapp.com",
+                    databaseURL: "https://uvb-76-default-rtdb.europe-west1.firebasedatabase.app",
+                    projectId: "uvb-76",
+                    storageBucket: "uvb-76.appspot.com",
+                    messagingSenderId: "1056404416263",
+                    appId: "1:1056404416263:web:d4430ecbdefde9119507a2"
+                };
+
+                // Initialize Firebase
+                const app = initializeApp(firebaseConfig);
+                const db = getDatabase(app);
+                const messagesRef = ref(db, 'messages');
+
+                // Fonction pour afficher les messages depuis Firebase et scroller automatiquement
+                onChildAdded(messagesRef, function(snapshot) {
+                    const messageData = snapshot.val();
+                    const entry = messageData.entry;
+
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'message';
+                    messageDiv.textContent = entry;
+
+                    document.getElementById('messages').appendChild(messageDiv);
+
+                    // Scroll automatique vers le bas
+                    const messagesDiv = document.getElementById('messages');
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                });
             </script>
         </section>
         
