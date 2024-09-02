@@ -1,74 +1,114 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Afficher les données Firebase</title>
-  <!-- Import Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js"></script>
-  <script>
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyBiwCxX52J4bF7iYN8V7Jsm1TeJ0P8U27U",
-      authDomain: "uvb-76.firebaseapp.com",
-      databaseURL: "https://uvb-76-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "uvb-76",
-      storageBucket: "uvb-76.appspot.com",
-      messagingSenderId: "1056404416263",
-      appId: "1:1056404416263:web:d4430ecbdefde9119507a2",
-      measurementId: "G-4BFF709SN6"
-    };
-
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-    const analytics = firebase.analytics();
-
-    // Fonction pour récupérer et afficher les données
-    function fetchData() {
-      const dataContainer = document.getElementById("dataContainer");
-      dataContainer.innerHTML = "Chargement des données..."; // Message de chargement
-
-      // Récupérer les données de Firebase
-      database.ref('stations').once('value', (snapshot) => {
-        const data = snapshot.val();
-
-        if (!data) {
-          dataContainer.innerHTML = "Aucune donnée trouvée.";
-          return;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Main page › Signabroam</title>
+    <link rel="stylesheet" href="getout.css">
+    <meta property="og:title" content="Signabroam">
+    <meta property="og:description" content="This website is make for purpose things like informations and bots about Shortwaves and Numbers Stations.">
+    <style>
+        #messages {
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            height: 400px;
+            overflow-y: scroll;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
         }
-
-        dataContainer.innerHTML = ""; // Effacer le message de chargement
-
-        // Parcourir les données et les afficher
-        for (let key in data) {
-          const entry = data[key].entry;
-
-          // Créer un paragraphe pour chaque entrée
-          const paragraph = document.createElement("p");
-          paragraph.textContent = entry;
-
-          // Ajouter l'entrée dans le conteneur
-          dataContainer.appendChild(paragraph);
+        .message {
+            margin-bottom: 10px;
         }
-      }).catch((error) => {
-        dataContainer.innerHTML = "Erreur lors du chargement des données : " + error.message;
-      });
-    }
-
-    // Charger les données dès que la page est chargée
-    window.onload = fetchData;
-  </script>
+    </style>
 </head>
 <body>
+    <header>
+        <div class="logo">
+            <h1>Signabroam</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="http://websdr.org">websdr</a></li>
+                <li><a href="http://rx.kiwisdr.com">kiwisdr</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <h2>Données envoyées à Firebase</h2>
+    <main>
+        <section class="intro">
+            <h2>Welcome!</h2>
+            <p>
+                This website is make for purpose things like informations and bots about Shortwaves and Numbers Stations.
+            </p>
+        </section>
 
-  <div id="dataContainer">
-    <!-- Les données de Firebase seront affichées ici -->
-  </div>
+        <section class="content">
+            <h3>Last frequency update</h3>
+            <!-- Section pour afficher les messages récupérés dans une boîte défilante -->
+            <div id="messages"></div>
 
+            <script type="module">
+                // Import the functions you need from the SDKs you need
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+                import { getDatabase, ref, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+                // Your web app's Firebase configuration
+                const firebaseConfig = {
+                    apiKey: "AIzaSyBiwCxX52J4bF7iYN8V7Jsm1TeJ0P8U27U",
+                    authDomain: "uvb-76.firebaseapp.com",
+                    databaseURL: "https://uvb-76-default-rtdb.europe-west1.firebasedatabase.app",
+                    projectId: "uvb-76",
+                    storageBucket: "uvb-76.appspot.com",
+                    messagingSenderId: "1056404416263",
+                    appId: "1:1056404416263:web:d4430ecbdefde9119507a2"
+                };
+
+                // Initialize Firebase
+                const app = initializeApp(firebaseConfig);
+                const db = getDatabase(app);
+                const messagesRef = ref(db, 'messages');
+
+                // Fonction pour afficher les messages depuis Firebase et scroller automatiquement
+                onChildAdded(messagesRef, function(snapshot) {
+                    const messageData = snapshot.val();
+                    const entry = messageData.entry;
+
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'message';
+                    messageDiv.textContent = entry;
+
+                    document.getElementById('messages').appendChild(messageDiv);
+
+                    // Scroll automatique vers le bas
+                    const messagesDiv = document.getElementById('messages');
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                });
+            </script>
+        </section>
+        
+        <br>
+        <section class="content">
+            <h3>SDR and Time of ionosphere</h3>
+            <section class="cube">
+                <center>
+                    <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!"><img src="https://www.hamqsl.com/solar101vhfpic.php"></a>
+                </center>
+                <center>
+                    <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!"><img src="https://www.hamqsl.com/solarmuf.php"></a>
+                    <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!"><img src="https://www.hamqsl.com/marston.php"></a>
+                </center>
+            </section>
+        </section>
+        <br>
+        <section class="content">
+          <h3>Shortwave bots</h3>
+          <p>coming soon...</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Discode Studio (some sources come from <a href="http://priyom.org">priyom.org</a>)</p>
+    </footer>
 </body>
-    </html>
+      </html>
