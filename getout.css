@@ -87,10 +87,24 @@ main {
     overflow-y: scroll;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.7);
+    font-size: 0.8rem; /* Taille du texte plus petite */
 }
 
 .message {
     margin-bottom: 10px;
+}
+
+/* Images */
+img {
+    border-radius: 10px;
+    max-width: 100%; /* Assure que les images sont responsives */
+    height: auto;
+}
+
+/* Cube */
+.cube {
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 /* Pied de page */
@@ -104,17 +118,6 @@ footer {
 
 footer p {
     font-size: 0.9rem;
-}
-
-.cube {
-    border-radius: 50px;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-img {
-    border-radius: 10px;
-    max-width: 100%; /* Assure que les images sont responsives */
-    height: auto;
 }
 
 /* Responsivité pour mobile */
@@ -152,6 +155,7 @@ img {
     #messages {
         height: 250px; /* Réduire la hauteur sur les petits écrans */
         padding: 5px;
+        font-size: 0.7rem; /* Réduire la taille du texte sur mobile */
     }
 
     img {
@@ -188,6 +192,7 @@ img {
     }
 
     #messages {
-        height: 50px;
+        height: 200px; /* Hauteur réduite pour très petits écrans */
+        font-size: 0.6rem; /* Taille du texte plus petite */
     }
 }
