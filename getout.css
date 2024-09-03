@@ -103,8 +103,9 @@ img {
 
 /* Cube */
 .cube {
-    border-radius: 50px;
+    border-radius: 20px;
     background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
 }
 
 /* Pied de page */
@@ -163,10 +164,11 @@ footer p {
         height: auto; /* Redimensionner les images pour qu'elles ne débordent pas */
     }
 
-    .cube {
-        border-radius: 20px;
-        padding: 10px;
-    }
+   .cube {
+    border-radius: 20px;
+    padding: 20px; /* Augmente l'espace intérieur */
+    box-sizing: border-box; /* Assure que le padding ne dépasse pas les dimensions du conteneur */
+}
 
     footer p {
         font-size: 0.8rem;
