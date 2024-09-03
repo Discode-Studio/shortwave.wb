@@ -98,16 +98,20 @@
             <section class="content">
           <h3>Radio player</h3>
           <section class="cube">
-            <!-- Sélection de fichiers audio avec un select -->
+<!-- Sélection de fichiers audio avec un select -->
 <div>
     <label for="audioSelect">Select a station:</label>
     <select id="audioSelect" onchange="playAudio(this.value)">
         <option value="" disabled selected>Choose a station</option>
+        <option value="" disabled>Shortwave & Number stations</option>
         <option value="http://stream.priyom.org:8000/buzzer">UZB-76</option>
         <option value="http://stream.priyom.org:8000/pip-day.ogg">The PIP Day</option>
         <option value="http://stream.priyom.org:8000/pip-night.ogg">The PIP Night</option>
         <option value="http://stream.priyom.org:8000/wheel-day.ogg">The Squeaky Wheel Day</option>
         <option value="http://stream.priyom.org:8000/wheel-night.ogg">The Squeaky Wheel Night</option>
+        <option value="" disabled>FM/ONLINE Radio</option>
+        <option value="http://manager8.streamradio.fr:1930/stream">Online Radio (FR)</option>
+        <option value="https://cast.iplayradio.net/listen/powermixfm/stream">PowerMixFM</option>
     </select>
 </div>
 
@@ -115,6 +119,7 @@
 <div>
     <label for="volumeControl">Volume</label>
     <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1" oninput="setVolume(this.value)">
+    <input type="checkbox" id="muteControl" onchange="toggleMute(this.checked)"> <label for="muteControl">Mute</label>
 </div>
 
 <!-- Barre de lecture en bas de la page -->
@@ -126,22 +131,30 @@
 <script>
     // Création d'un élément audio global
     let audio = new Audio();
-    
+
     // Fonction pour jouer l'audio sélectionné
     function playAudio(src) {
         if (src) {
             audio.src = src;
             audio.play();
-            
-            // Mise à jour des informations de lecture en bas de la page
+
+            // Mettre à jour les informations de lecture
             document.getElementById("currentTrack").innerText = "Currently: " + src.split('/').pop();
-            document.getElementById("stationName").innerText = "Station: PriyomSDR"; // Tu peux personnaliser ici
+            document.getElementById("stationName").innerText = "Station: " + src.split('://').pop('/');
+
+            // Réinitialiser la barre de progression
+            // progressBar.value = 0; // Commenté car la barre de progression est retirée
         }
     }
 
     // Fonction pour régler le volume
     function setVolume(volume) {
         audio.volume = volume;
+    }
+
+    // Fonction pour activer/désactiver le mute
+    function toggleMute(isMuted) {
+        audio.muted = isMuted;
     }
 </script>
           </section>
