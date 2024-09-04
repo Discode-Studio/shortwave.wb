@@ -122,7 +122,7 @@ footer p {
 }
 
 /* Responsivité pour mobile */
-@media (max-width: 768px) {
+@@media (min-width: 768px) and (max-width: 1024px) {
     body {
         font-size: 1rem;
         background-size: cover; /* Meilleur ajustement du fond pour mobile */
@@ -176,7 +176,7 @@ footer p {
 }
 
 /* Pour les très petits écrans (smartphones plus petits) */
-@media (max-width: 480px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     header .logo h1 {
         font-size: 1.2rem;
     }
