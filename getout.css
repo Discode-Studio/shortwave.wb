@@ -1,327 +1,204 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Main page › Signabroam</title>
-    <link rel="stylesheet" href="getout.css">
-    <link rel="stylesheet" href="chat.css">
-    <meta property="og:title" content="Signabroam">
-    <meta property="og:description" content="This website is make for purpose things like informations and bots about Shortwaves and Numbers Stations.">
-</head>
-<body>
-    <header>
-        <div class="logo">
-            <h1>Signabroam</h1>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="http://websdr.org">websdr</a></li>
-                <li><a href="http://rx.kiwisdr.com">kiwisdr</a></li>
-            </ul>
-        </nav>
-    </header>
+/* Styles généraux */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    <main>
-        <section class="intro">
-            <h2>Welcome!</h2>
-            <p>
-                This website is make for purpose things like informations and bots about Shortwaves and Numbers Stations.
-            </p>
-        </section>
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("font.jpg");
+    background-size: auto;
+    background-position: center;
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.7); /* Superposition sombre */
+    color: #e2e2e2;
+    line-height: 1.6;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ombre avec 50% d'opacité */
+}
 
-        <section class="content">
-            <h3>Last frequency update</h3>
-            <!-- Section pour afficher les messages récupérés dans une boîte défilante -->
-            <div id="messages"></div>
+/* En-tête */
+header {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 0;
+    border-bottom: 3px solid #666;
+}
 
-            <!-- Script Firebase pour afficher les messages -->
-            <script type="module">
-                // Import the functions you need from the SDKs you need
-                import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-                import { getDatabase, ref, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+header .logo h1 {
+    text-align: center;
+    font-size: 2rem;
+}
 
-                // Your web app's Firebase configuration
-                const firebaseConfig = {
-                    apiKey: "AIzaSyBiwCxX52J4bF7iYN8V7Jsm1TeJ0P8U27U",
-                    authDomain: "uvb-76.firebaseapp.com",
-                    databaseURL: "https://uvb-76-default-rtdb.europe-west1.firebasedatabase.app",
-                    projectId: "uvb-76",
-                    storageBucket: "uvb-76.appspot.com",
-                    messagingSenderId: "1056404416263",
-                    appId: "1:1056404416263:web:d4430ecbdefde9119507a2"
-                };
+nav {
+    margin-top: 10px;
+}
 
-                // Initialize Firebase
-                const app = initializeApp(firebaseConfig);
-                const db = getDatabase(app);
-                const messagesRef = ref(db, 'messages');
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
 
-                // Fonction pour afficher les messages depuis Firebase et scroller automatiquement
-                onChildAdded(messagesRef, function(snapshot) {
-                    const messageData = snapshot.val();
-                    const entry = messageData.entry;
+nav ul li {
+    margin: 0 15px;
+}
 
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = 'message';
-                    messageDiv.textContent = entry;
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-                    document.getElementById('messages').appendChild(messageDiv);
+nav ul li a:hover {
+    text-decoration: underline;
+}
 
-                    // Scroll automatique vers le bas
-                    const messagesDiv = document.getElementById('messages');
-                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                });
-            </script>
-        </section>
-        <style>
-        /* Style de la prévisualisation de police avec une image de fond */
-        .font-preview {
-            margin-top: 20px;
-            width: 300px;
-            height: 200px;
-            background-size: cover;
-            background-position: center;
-            border: 2px solid #000;
-        }
-    </style>
-    <section class="content">
-    <h1>Font Selector</h1>
-    <section class="cube">
-    <label for="font-selector">Select a font :</label>
-    <select id="font-selector">
-        <option value="font.jpg" data-name="Font 1">Signabroam</option>
-        <option value="font2.jpg" data-name="Font 2">Troll Face</option>
-    </select>
+/* Section principale */
+main {
+    padding: 20px;
+}
 
-    <div class="font-preview" id="font-preview">
-        <!-- La prévisualisation avec l'image de fond apparaîtra ici -->
-    </div>
-    
-    <button id="confirm-button">Confirmer</button>
-    </section>
-    </section>
-    <script>
-        const fontSelector = document.getElementById('font-selector');
-        const fontPreview = document.getElementById('font-preview');
-        const confirmButton = document.getElementById('confirm-button');
+.intro {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        // Fonction pour mettre à jour la prévisualisation
-        function updateFontPreview() {
-            const selectedOption = fontSelector.options[fontSelector.selectedIndex];
-            const fontImage = selectedOption.value;
-            const fontName = selectedOption.getAttribute('data-name');
+.intro h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
 
-            // Mettre à jour la prévisualisation avec l'image de fond et le nom
-            fontPreview.style.backgroundImage = `url('${fontImage}')`;
-            fontPreview.innerHTML = `<h2>${fontName}</h2>`;
-        }
+.content ul {
+    list-style-type: square;
+    padding-left: 20px;
+}
 
-        // Fonction pour changer le fond du body après confirmation
-        function changeBackgroundImage() {
-            const selectedOption = fontSelector.options[fontSelector.selectedIndex];
-            const fontImage = selectedOption.value;
+.content h3 {
+    margin-bottom: 10px;
+    color: #f39c12;
+}
 
-            // Changer l'image de fond du body et limiter sa taille à 200px de hauteur
-            document.body.style.backgroundImage = `url('${fontImage}')`;
-            document.body.style.backgroundSize = 'cover';  // Largeur auto, hauteur max 200px
-            document.body.style.backgroundPosition = 'center'; // Centre l'image
-            document.body.style.backgroundRepeat = 'no-repeat'; // Empêche la répétition de l'image
-        }
+/* Boîte de messages */
+#messages {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    height: 400px;
+    overflow-y: scroll;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-size: 0.8rem; /* Taille du texte plus petite */
+}
 
-        // Mettre à jour la prévisualisation quand on change l'option du select
-        fontSelector.addEventListener('change', updateFontPreview);
+.message {
+    margin-bottom: 10px;
+}
 
-        // Appliquer le changement d'image quand on clique sur le bouton "Confirmer"
-        confirmButton.addEventListener('click', changeBackgroundImage);
+/* Images */
+img {
+    border-radius: 10px;
+    max-width: 100%; /* Assure que les images sont responsives */
+    height: auto;
+}
 
-        // Mettre à jour la prévisualisation au chargement de la page
-        updateFontPreview();
-    </script>
-        <br>
-        <section class="content">
-            <h3>SDR and Time of ionosphere</h3>
-            <section class="cube">
-                <center>
-                    <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!">
-                        <img src="https://www.hamqsl.com/solar101vhfpic.php">
-                    </a>
-                </center>
-                <center>
-                    <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!">
-                        <img src="https://www.hamqsl.com/solarmuf.php">
-                    </a>
-                    <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!">
-                        <img src="https://www.hamqsl.com/marston.php">
-                    </a>
-                </center>
-            </section>
-        </section>
-        <br>
-            <section class="content">
-          <h3>Radio player</h3>
-          <section class="cube">
-<!-- Sélection de fichiers audio avec un select -->
-<div>
-    <label for="audioSelect">Select a station:</label>
-    <select id="audioSelect" onchange="playAudio(this.value)">
-        <option value="" disabled selected>Choose a station</option>
-        <option value="" disabled>> Shortwave & Number stations</option>
-        <option value="http://stream.priyom.org:8000/buzzer">UZB-76</option>
-        <option value="http://stream.priyom.org:8000/pip-day.ogg">The PIP Day</option>
-        <option value="http://stream.priyom.org:8000/pip-night.ogg">The PIP Night</option>
-        <option value="http://stream.priyom.org:8000/wheel-day.ogg">The Squeaky Wheel Day</option>
-        <option value="http://stream.priyom.org:8000/wheel-night.ogg">The Squeaky Wheel Night</option>
-        <option value="" disabled>> FM/ONLINE Radio</option>
-        <option value="http://manager8.streamradio.fr:1930/stream">Online Radio (FR)</option>
-        <option value="https://cast.iplayradio.net/listen/powermixfm/stream">PowerMixFM</option>
-        <option value="https://air.racyja.com/pinsk">SVOYO (RUS)</option>
-        <option value="https://air.racyja.com/racja96">Racja (BL-RUS)</option>
-        <option value="https://manager6.streamradio.fr:2735/stream">Radio Le Zoo (FR) (Take 5 seconds to load)</option>
-        <option value="https://radiouji.uji.es:8443/high.ogg">UJI</option>
-        <option value="http://rustradio.org:9000/stream.ogg">Rust (FR)</option>
-        <option value="http://radio-active.net:8000/active">Associative de l'aire toulonnaise (FR)</option>
-        <option value="http://radio.linn.co.uk:8003/autodj">Linn (Take 5 seconds to load)</option>
-        <option value="http://icecast.infini.fr:8000/mutine">Mutine (FR)</option>
-        <option value="http://stream.radios-arra.fr:8000/contactfm">ContactFM (FR)</option>
-        <option value="http://stream.radios-arra.fr:8000/fmplus">FM+ (FR)</option>
-    </select>
-</div>
+/* Cube */
+.cube {
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-color: solid white;
+    border: 1px solid white;
+}
 
-<!-- Input range pour le volume de l'audio -->
-<div>
-    <label for="volumeControl">Volume</label>
-    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1" oninput="setVolume(this.value)">
-    <input type="checkbox" id="muteControl" onchange="toggleMute(this.checked)"> <label for="muteControl">Mute</label>
-</div>
+/* Pied de page */
+footer {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
 
-<!-- Barre de lecture en bas de la page -->
-<div id="nowPlaying" style="bottom: 0; width: 100%; background-color: #222; color: white; padding: 10px; text-align: center; border-radius: 15px;">
-    <span id="stationName">Station: None</span> <br />
-    <span id="currentTrack">Currently: None</span>
-</div>
+footer p {
+    font-size: 0.9rem;
+}
 
-<script>
-    let audio = new Audio();
-    let currentTrack = document.getElementById("currentTrack");
-    let stationName = document.getElementById("stationName");
-
-    // Liste des stations spéciales pour le message personnalisé
-    const specialStations = [
-        "buzzer",
-        "pip-day.ogg",
-        "pip-night.ogg",
-        "wheel-day.ogg",
-        "wheel-night.ogg"
-    ];
-
-    // Fonction pour jouer l'audio sélectionné
-    function playAudio(src) {
-        if (src) {
-            audio.src = src;
-            audio.play();
-
-            let stationLabel = src.split('://').pop('/').split('/').pop();
-            stationName.innerText = "Station: " + stationLabel;
-
-            // Vérifier si la station fait partie des stations spéciales
-            if (specialStations.some(station => src.includes(station))) {
-                currentTrack.innerText = "Currently: This is a military station extracted from SDR";
-            } else {
-                fetchIcecastMetadata(src);  // Appel pour récupérer les métadonnées Icecast
-            }
-        }
+/* Responsivité pour mobile */
+@media (min-width: 768px) and (max-width: 1024px) {
+    body {
+        font-size: 1rem;
+        background-size: auto; /* Meilleur ajustement du fond pour mobile */
     }
 
-    // Fonction pour régler le volume
-    function setVolume(volume) {
-        audio.volume = volume;
+    header .logo h1 {
+        font-size: 1.5rem;
     }
 
-    // Fonction pour activer/désactiver le mute
-    function toggleMute(isMuted) {
-        audio.muted = isMuted;
+    nav ul {
+        flex-direction: column;
+        align-items: center;
     }
 
-    // Fonction pour interroger Icecast et récupérer les métadonnées
-    function fetchIcecastMetadata(streamUrl) {
-        const statusUrls = [
-            streamUrl.replace(/\/stream.*$/, "/status-json.xsl"),
-            streamUrl.replace(/\/stream.*$/, "/status.xsl"),
-            streamUrl.replace(/\/stream.*$/, "/status2.xsl")
-        ];
-
-        // Fonction pour essayer les différentes URL de statut
-        function tryFetch(urls, index = 0) {
-            if (index >= urls.length) {
-                // Afficher le nom du fichier audio ou un message générique si aucune info n'est disponible
-                let filename = streamUrl.split('/').pop();
-                currentTrack.innerText = `Currently: No information available about the current track (File: ${filename})`;
-                return;
-            }
-
-            fetch(urls[index])
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`URL not available: ${urls[index]}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Chercher les informations sur la piste en cours (adapté selon le format Icecast)
-                    if (data && data.icestats && data.icestats.source) {
-                        let source = Array.isArray(data.icestats.source) ? data.icestats.source[0] : data.icestats.source;
-                        if (source.title) {
-                            currentTrack.innerText = `Currently: ${source.title}`;
-                        } else {
-                            currentTrack.innerText = "Currently: No track information";
-                        }
-                    } else {
-                        currentTrack.innerText = "Currently: No metadata available";
-                    }
-                })
-                .catch(error => {
-                    console.log(`Trying next URL due to error: ${error.message}`);
-                    tryFetch(urls, index + 1);  // Essayer l'URL suivante en cas d'erreur
-                });
-        }
-
-        tryFetch(statusUrls);  // Démarrer avec la première URL de statut
+    nav ul li {
+        margin: 5px 0;
     }
-</script>
-          </section>
-          
-        </section>
-        <br>
-        <section class="content">
-          <h3>Bots</h3>
-          <h4>click on one of the link below to invite the bot.</h4>
-          <section class="cube">
-             <h3>Shortwave</h3>
-          <li><a href="https://discord.com/oauth2/authorize?client_id=1277260205780111380&permissions=8&integration_type=0&scope=bot">UVB-76</a></li>
-          <li><a href="https://discord.com/oauth2/authorize?client_id=1277971678273605694&permissions=8&integration_type=0&scope=bot">The PIP Day</a></li>
-          <li><a href="https://discord.com/oauth2/authorize?client_id=1277978599583911946&permissions=8&integration_type=0&scope=bot">The PIP Night</a></li>
-          <li><a href="https://discord.com/oauth2/authorize?client_id=1278053516841189417&permissions=8&integration_type=0&scope=bot">The Squeaky Wheel Day</a></li>
-          <li><a href="https://discord.com/oauth2/authorize?client_id=1278060375799234601&permissions=8&integration_type=0&scope=bot">The Squeaky Wheel Night</a></li>
-          <br><h3>Music</h3>
-          <li><a href="https://discord.com/oauth2/authorize?client_id=1179403702629564457&permissions=8&integration_type=0&scope=bot">Xenorion Music</a></li>
-          </section>
-        </section>
-        <br>
-        <section class="content">
-          <h3>Known pirates</h3>
-          <section class="cube">
-            <h3>UVB-76:</h3>
-            <li>∆∆∆ / ∆X3 "The3Triangle"</li>
-            <li>E12 [unknown]</li>
-            <li>Russian guy [unknown]</li>
-          </section>
-        </section>
-    </main>
 
-    <footer>
-        <p>&copy; Discode Studio (some sources come from <a href="http://priyom.org">priyom.org</a>)</p>
-    </footer>
-</body>
-</html>
+    main {
+        padding: 10px;
+    }
+
+    .intro h2 {
+        font-size: 1.5rem;
+    }
+
+    .content h3 {
+        font-size: 1.2rem;
+    }
+
+    #messages {
+        height: 250px; /* Réduire la hauteur sur les petits écrans */
+        padding: 5px;
+        font-size: 0.7rem; /* Réduire la taille du texte sur mobile */
+    }
+
+    img {
+        max-width: 100%;
+        height: auto; /* Redimensionner les images pour qu'elles ne débordent pas */
+    }
+
+   .cube {
+    border-radius: 20px;
+    padding: 20px; /* Augmente l'espace intérieur */
+    box-sizing: border-box; /* Assure que le padding ne dépasse pas les dimensions du conteneur */
+    border-color: solid white;
+    border: 1px solid white;
+}
+
+    footer p {
+        font-size: 0.8rem;
+    }
+}
+
+/* Pour les très petits écrans (smartphones plus petits) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    header .logo h1 {
+        font-size: 1.2rem;
+    }
+
+    nav ul {
+        padding-left: 0;
+    }
+
+    .intro h2 {
+        font-size: 1.2rem;
+    }
+
+    .content h3 {
+        font-size: 1rem;
+    }
+
+    #messages {
+        height: 200px; /* Hauteur réduite pour très petits écrans */
+        font-size: 0.6rem; /* Taille du texte plus petite */
+    }
+}
