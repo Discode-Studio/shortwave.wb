@@ -7,11 +7,10 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-image: url("font1.jpg");
     background-size: auto;
     background-position: center;
     background-blend-mode: darken;
-    background-color: rgba(0, 0, 0, 0.7); /* Superposition sombre */
+    background-color: #0E0F1A; /* Superposition sombre */
     color: #e2e2e2;
     line-height: 1.6;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ombre avec 50% d'opacité */
