@@ -104,18 +104,25 @@
     <label for="audioSelect">Select a station:</label>
     <select id="audioSelect" onchange="playAudio(this.value)">
         <option value="" disabled selected>Choose a station</option>
-        <option value="" disabled>Shortwave & Number stations</option>
+        <option value="" disabled>> Shortwave & Number stations</option>
         <option value="http://stream.priyom.org:8000/buzzer">UZB-76</option>
         <option value="http://stream.priyom.org:8000/pip-day.ogg">The PIP Day</option>
         <option value="http://stream.priyom.org:8000/pip-night.ogg">The PIP Night</option>
         <option value="http://stream.priyom.org:8000/wheel-day.ogg">The Squeaky Wheel Day</option>
         <option value="http://stream.priyom.org:8000/wheel-night.ogg">The Squeaky Wheel Night</option>
-        <option value="" disabled>FM/ONLINE Radio</option>
+        <option value="" disabled>> FM/ONLINE Radio</option>
         <option value="http://manager8.streamradio.fr:1930/stream">Online Radio (FR)</option>
         <option value="https://cast.iplayradio.net/listen/powermixfm/stream">PowerMixFM</option>
-        <option value="https://air.racyja.com/pinsk">SVOYO</option>
-        <option value="https://air.racyja.com/racja_clear">Racja (BL-RUS)</option>
-        <option value="https://manager6.streamradio.fr:2735/stream">Radio Le Zoo (FR)</option>
+        <option value="https://air.racyja.com/pinsk">SVOYO (RUS)</option>
+        <option value="https://air.racyja.com/racja96">Racja (BL-RUS)</option>
+        <option value="https://manager6.streamradio.fr:2735/stream">Radio Le Zoo (FR) (Take 5 seconds to load)</option>
+        <option value="https://radiouji.uji.es:8443/high.ogg">UJI</option>
+        <option value="http://rustradio.org:9000/stream.ogg">Rust (FR)</option>
+        <option value="http://radio-active.net:8000/active">Associative de l'aire toulonnaise (FR)</option>
+        <option value="http://radio.linn.co.uk:8003/autodj">Linn (Take 5 seconds to load)</option>
+        <option value="http://icecast.infini.fr:8000/mutine">Mutine (FR)</option>
+        <option value="http://stream.radios-arra.fr:8000/contactfm">ContactFM (FR)</option>
+        <option value="http://stream.radios-arra.fr:8000/fmplus">FM+ (FR)</option>
     </select>
 </div>
 
@@ -133,8 +140,18 @@
 </div>
 
 <script>
-    // Création d'un élément audio global
     let audio = new Audio();
+    let currentTrack = document.getElementById("currentTrack");
+    let stationName = document.getElementById("stationName");
+
+    // Liste des stations spéciales pour le message personnalisé
+    const specialStations = [
+        "buzzer",
+        "pip-day.ogg",
+        "pip-night.ogg",
+        "wheel-day.ogg",
+        "wheel-night.ogg"
+    ];
 
     // Fonction pour jouer l'audio sélectionné
     function playAudio(src) {
@@ -142,12 +159,15 @@
             audio.src = src;
             audio.play();
 
-            // Mettre à jour les informations de lecture
-            document.getElementById("currentTrack").innerText = "Currently: " + src.split('/').pop();
-            document.getElementById("stationName").innerText = "Station: " + src.split('://').pop('/');
+            let stationLabel = src.split('://').pop('/').split('/').pop();
+            stationName.innerText = "Station: " + stationLabel;
 
-            // Réinitialiser la barre de progression
-            // progressBar.value = 0; // Commenté car la barre de progression est retirée
+            // Vérifier si la station fait partie des stations spéciales
+            if (specialStations.some(station => src.includes(station))) {
+                currentTrack.innerText = "Currently: This is a military station extracted from SDR";
+            } else {
+                fetchIcecastMetadata(src);  // Appel pour récupérer les métadonnées Icecast
+            }
         }
     }
 
@@ -159,6 +179,52 @@
     // Fonction pour activer/désactiver le mute
     function toggleMute(isMuted) {
         audio.muted = isMuted;
+    }
+
+    // Fonction pour interroger Icecast et récupérer les métadonnées
+    function fetchIcecastMetadata(streamUrl) {
+        const statusUrls = [
+            streamUrl.replace(/\/stream.*$/, "/status-json.xsl"),
+            streamUrl.replace(/\/stream.*$/, "/status.xsl"),
+            streamUrl.replace(/\/stream.*$/, "/status2.xsl")
+        ];
+
+        // Fonction pour essayer les différentes URL de statut
+        function tryFetch(urls, index = 0) {
+            if (index >= urls.length) {
+                // Afficher le nom du fichier audio ou un message générique si aucune info n'est disponible
+                let filename = streamUrl.split('/').pop();
+                currentTrack.innerText = `Currently: No information available about the current track (File: ${filename})`;
+                return;
+            }
+
+            fetch(urls[index])
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`URL not available: ${urls[index]}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Chercher les informations sur la piste en cours (adapté selon le format Icecast)
+                    if (data && data.icestats && data.icestats.source) {
+                        let source = Array.isArray(data.icestats.source) ? data.icestats.source[0] : data.icestats.source;
+                        if (source.title) {
+                            currentTrack.innerText = `Currently: ${source.title}`;
+                        } else {
+                            currentTrack.innerText = "Currently: No track information";
+                        }
+                    } else {
+                        currentTrack.innerText = "Currently: No metadata available";
+                    }
+                })
+                .catch(error => {
+                    console.log(`Trying next URL due to error: ${error.message}`);
+                    tryFetch(urls, index + 1);  // Essayer l'URL suivante en cas d'erreur
+                });
+        }
+
+        tryFetch(statusUrls);  // Démarrer avec la première URL de statut
     }
 </script>
           </section>
