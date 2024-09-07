@@ -5,9 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Main page › Signabroam</title>
     <link rel="stylesheet" href="getout.css">
+    <link rel="stylesheet" href="menu ">
     <meta property="og:title" content="Signabroam">
     <meta property="og:description" content="This website is make for purpose things like informations and bots about Shortwaves and Numbers Stations.">
 </head>
+<style>
+  .date {
+            font-family: Arial, sans-serif;
+            text-align: left;
+        }
+</style>
+<style>
+        /* Conteneur de l'iframe */
+        .iframe-container {
+            width: 100%; /* Adapter à la taille du parent */
+            height: 500px; /* Hauteur de l'iframe */
+            overflow: hidden; /* Masquer les débordements */
+            border: none; /* Pas de bordure */
+        }
+
+        /* Appliquer un zoom à l'iframe */
+        .iframe-container iframe {
+            width: 200%; /* Augmenter la taille initiale de l'iframe */
+            height: 200%; /* Augmenter la hauteur pour éviter les débordements */
+            transform: scale(0.5); /* Appliquer le zoom */
+            transform-origin: 0 0; /* Garder le coin supérieur gauche comme point de référence */
+            border: none; /* Pas de bordure */
+            border-radius: 10px;
+        }
+    </style>
 <body>
     <header>
         <div class="logo">
@@ -15,8 +41,9 @@
         </div>
         <nav>
             <ul>
-                <li><a href="http://websdr.org">websdr</a></li>
-                <li><a href="http://rx.kiwisdr.com">kiwisdr</a></li>
+                <li><a href="http://websdr.org">WebSDR</a></li>
+                <li><a href="http://rx.kiwisdr.com">KiwiSDR</a></li>
+                <li><a href="openwebrx.de">OpenWebrx</a></li>
             </ul>
         </nav>
     </header>
@@ -28,7 +55,47 @@
                 This website is make for purpose things like informations and bots about Shortwaves and Numbers Stations.
             </p>
         </section>
+<script>
+        function formatDateTime() {
+            const now = new Date();
+            
+            // Format for the date: weekday, day month year
+            const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            
+            const dayOfWeek = daysOfWeek[now.getDay()];
+            const day = now.getDate();
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+            
+            // Format for the date in text
+            const dateText = `${dayOfWeek}, ${day} ${month} ${year}`;
+            
+            // UTC Time
+            const utcHour = now.getUTCHours().toString().padStart(2, '0');
+            const utcMinute = now.getUTCMinutes().toString().padStart(2, '0');
+            const utcSecond = now.getUTCSeconds().toString().padStart(2, '0');
+            
+            // Local Time (Moscow is UTC+3)
+            const moscowOffset = 3 * 60; // Moscow is UTC+3
+            const localMinutes = now.getUTCMinutes() + now.getUTCHours() * 60 + moscowOffset;
+            const localHour = Math.floor(localMinutes / 60).toString().padStart(2, '0');
+            const localMinute = (localMinutes % 60).toString().padStart(2, '0');
+            const localSecond = now.getSeconds().toString().padStart(2, '0');
+            
+            document.getElementById('datetime').innerHTML = `
+                ${dateText}<br>
+               UTC ${utcHour}:${utcMinute}:${utcSecond} UTC-0 <br>
+                MSK ${localHour}:${localMinute}:${localSecond} Local
+            `;
+        }
 
+        // Update the time every second
+        setInterval(formatDateTime, 1000);
+        
+        // Initial call to display the time immediately
+        formatDateTime();
+    </script>
         <section class="content">
             <h3>Last frequency update</h3>
             <!-- Section pour afficher les messages récupérés dans une boîte défilante -->
@@ -78,6 +145,9 @@
             <h3>SDR and Time of ionosphere</h3>
             <section class="cube">
                 <center>
+                  <b><div class="date" id="datetime">
+        <!-- Date et Heure seront insérés ici -->
+    </div></b>
                     <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!">
                         <img src="https://www.hamqsl.com/solar101vhfpic.php">
                     </a>
@@ -253,7 +323,104 @@
           </section>
         </section>
     </main>
+<script>
+    // Fonction pour changer l'URL de l'iframe en fonction de la sélection
+    function changeIframeURL() {
+        var selector = document.getElementById("siteSelector");
+        var iframe = document.getElementById("myIframe");
+        var selectedURL = selector.value;
 
+        // Changer la source de l'iframe à l'URL sélectionnée
+        iframe.src = selectedURL;
+    }
+
+    // Fonction pour couper/démuter le son de la page
+    function toggleMute() {
+        var iframe = document.getElementById("myIframe");
+        iframe.muted = !iframe.muted; // alterne entre mute et unmute
+    }
+
+    // Fonction pour zoomer/dézoomer la page
+    function zoomIn() {
+        var iframe = document.getElementById("myIframe");
+        var currentZoom = iframe.style.zoom ? parseFloat(iframe.style.zoom) : 1;
+        iframe.style.zoom = currentZoom + 0.1; // augmente le zoom de 10%
+    }
+
+    function zoomOut() {
+        var iframe = document.getElementById("myIframe");
+        var currentZoom = iframe.style.zoom ? parseFloat(iframe.style.zoom) : 1;
+        iframe.style.zoom = currentZoom - 0.1; // réduit le zoom de 10%
+    }
+
+    // Fonction pour actualiser l'iframe
+    function refreshIframe() {
+        var iframe = document.getElementById("myIframe");
+        iframe.src = iframe.src; // recharge la même source
+    }
+
+    // Fonction pour aller à la page précédente
+    function goBack() {
+        window.history.back(); // utilise l'historique du navigateur pour revenir
+    }
+
+    // Fonction pour aller à la page suivante
+    function goForward() {
+        window.history.forward(); // utilise l'historique du navigateur pour avancer
+    }
+</script>
+<style>
+  .controls button {
+   background-color: transparent;
+   border: none;
+   border-radius: 300px;
+   padding: 5px;
+   color: white;
+  }
+  
+  .controls img {
+    max-height: 30px;
+    max-width: 30px;
+  }
+</style>
+<div class="content">
+    <h3>SDR Player</h3>
+    <div class="cube">
+        <!-- Sélecteur avec des sites prédéfinis -->
+        <label for="siteSelector">SDR Player :</label>
+        <select id="siteSelector" onchange="changeIframeURL()">
+            <option value="about:blank">-- Select an SDR --</option>
+            <option value="" disabled>> WebSDR</option>
+            <option value="http://websdr.ewi.utwente.nl:8901/">uTwente SDR</option>
+            <option value="http://websdr.78dx.ru:8901/">Saint-petersburg SDR</option>
+            <option value="" disabled>> KiwiSDR</option>
+            <option value="http://kiwi-kuo.aprs.fi:8073/">Kuopio aprs.fi</option>
+            <option value="http://81.166.116.237:8073/">Tjelta Norway</option>
+            <option value="https://khv.swl.su/">RussiaSWL</option>
+            <option value="" disabled>> OpenWebrx</option>
+            <option value="https://2.websdr.jestok.com/">SR4DON (OpenWebrx+)</option>
+            <option value="" disabled>> YouTube Stream</option>
+            <option value="https://www.youtube.com/embed/8h_D2P0iqMk?si=wdQTQ08fkEwVqoDH">The SWL Channel</option>
+            <option value="https://www.youtube.com/embed/JowZmgyXtks?si=gxZLN0JaNlW4FNgS">Shortwave Nepann</option>
+            <option value="" disabled>> Experimental</option>
+            <option value="http://discode-studio.github.io/shortwave.bot/">Signabroam</option>
+        </select>
+        
+        <div class="controls">
+            <button onclick="zoomIn()"><img src="https://raw.githubusercontent.com/jketterl/openwebrx/a9f47be96dd213127d9011de9d15ca5171e6b950/inkscape%20files/openwebrx-zoom-in.svg" alt="Zoomin"></button>
+            <button onclick="zoomOut()"><img src="https://raw.githubusercontent.com/jketterl/openwebrx/a9f47be96dd213127d9011de9d15ca5171e6b950/inkscape%20files/openwebrx-zoom-out.svg" alt="Zoomout"></button>
+            <button onclick="refreshIframe()">Refresh</button>
+            <button onclick="goBack()">Back</button>
+            <button onclick="goForward()">Forward</button>
+        </div>
+
+        <!-- Conteneur de l'iframe qui affiche la page sélectionnée -->
+        
+        <div class="iframe-container">
+            <iframe id="myIframe" src="about:blank" width="100%" height="100%"></iframe>
+        </div>
+    </div>
+</div>
     <footer>
         <p>&copy; Discode Studio (some sources come from <a href="http://priyom.org">priyom.org</a>)</p>
     </footer>
