@@ -33,6 +33,7 @@
             border: none; /* Pas de bordure */
             border-radius: 10px;
         }
+        
     </style>
 <body>
     <header>
@@ -197,7 +198,7 @@
 <!-- Input range pour le volume de l'audio -->
 <div>
     <label for="volumeControl">Volume</label>
-    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1" oninput="setVolume(this.value)">
+    <input type="range" id="volumeControl" min="0" max="1" step="0.001" value="1" oninput="setVolume(this.value)">
     <input type="checkbox" id="muteControl" onchange="toggleMute(this.checked)"> <label for="muteControl">Mute</label>
 </div>
 
@@ -397,8 +398,12 @@
             <option value="http://kiwi-kuo.aprs.fi:8073/">Kuopio aprs.fi</option>
             <option value="http://81.166.116.237:8073/">Tjelta Norway</option>
             <option value="https://khv.swl.su/">RussiaSWL</option>
+            <option value="http://80.146.82.2:8073/">DL3ZID</option>
+            <option value="http://fsdr.duckdns.org/">DuckDNS Hungary</option>
+            <option value="http://188.162.63.103:8073/">Saratov (good for airhorn)</option>
             <option value="" disabled>> OpenWebrx</option>
-            <option value="https://2.websdr.jestok.com/">SR4DON (OpenWebrx+)</option>
+            <option value="https://2.websdr.jestok.com/">SR4DON (OpenWebrx+)(Poland)</option>
+            <option value="http://jimjackii.no-ip.org/owrx/">EDDC2 (Germany)</option>
             <option value="" disabled>> YouTube Stream</option>
             <option value="https://www.youtube.com/embed/8h_D2P0iqMk?si=wdQTQ08fkEwVqoDH">The SWL Channel</option>
             <option value="https://www.youtube.com/embed/JowZmgyXtks?si=gxZLN0JaNlW4FNgS">Shortwave Nepann</option>
