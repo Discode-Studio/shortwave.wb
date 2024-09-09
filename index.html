@@ -439,4 +439,69 @@
                     if (data && data.icestats && data.icestats.source) {
                         let source = Array.isArray(data.icestats.source) ? data.icestats.source[0] : data.icestats.source;
                         if (source.title) {
-                            currentTrack.innerText = `Cur
+                            currentTrack.innerText = `Currently: No information available about the current track (File: ${filename})`;
+                return;
+            }
+
+            fetch(urls[index])
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`URL not available: ${urls[index]}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Chercher les informations sur la piste en cours (adapté selon le format Icecast)
+                    if (data && data.icestats && data.icestats.source) {
+                        let source = Array.isArray(data.icestats.source) ? data.icestats.source[0] : data.icestats.source;
+                        if (source.title) {
+                            currentTrack.innerText = `Currently: ${source.title}`;
+                        } else {
+                            currentTrack.innerText = "Currently: No track information";
+                        }
+                    } else {
+                        currentTrack.innerText = "Currently: No metadata available";
+                    }
+                })
+                .catch(error => {
+                    console.log(`Trying next URL due to error: ${error.message}`);
+                    tryFetch(urls, index + 1);  // Essayer l'URL suivante en cas d'erreur
+                });
+        }
+
+        tryFetch(statusUrls);  // Démarrer avec la première URL de statut
+    }
+</script>
+          </section>
+        </section>
+        <br>
+        <section class="content">
+          <h3>Bots</h3>
+          <h4>click on one of the link below to invite the bot.</h4>
+          <section class="cube">
+             <h3>Shortwave</h3>
+          <li><a href="https://discord.com/oauth2/authorize?client_id=1277260205780111380&permissions=8&integration_type=0&scope=bot">UVB-76</a></li>
+          <li><a href="https://discord.com/oauth2/authorize?client_id=1277971678273605694&permissions=8&integration_type=0&scope=bot">The PIP Day</a></li>
+          <li><a href="https://discord.com/oauth2/authorize?client_id=1277978599583911946&permissions=8&integration_type=0&scope=bot">The PIP Night</a></li>
+          <li><a href="https://discord.com/oauth2/authorize?client_id=1278053516841189417&permissions=8&integration_type=0&scope=bot">The Squeaky Wheel Day</a></li>
+          <li><a href="https://discord.com/oauth2/authorize?client_id=1278060375799234601&permissions=8&integration_type=0&scope=bot">The Squeaky Wheel Night</a></li>
+          <br><h3>Music</h3>
+          <li><a href="https://discord.com/oauth2/authorize?client_id=1179403702629564457&permissions=8&integration_type=0&scope=bot">Xenorion Music</a></li>
+          </section>
+        </section>
+        <br>
+        <section class="content">
+          <h3>Known pirates</h3>
+          <section class="cube">
+            <h3>UVB-76:</h3>
+            <li><a href="triangle.htm">∆∆∆ / ∆X3 "The3Triangle"</a></li>
+            <li><a href="e12.htm">E12 [unknown]</a></li>
+            <li><a href="rusguy.htm">Russian guy [unknown]</a></li>
+          </section>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; Discode Studio (some sources come from <a href="http://priyom.org">priyom.org</a>)</p>
+    </footer>
+</body>
+</html>
