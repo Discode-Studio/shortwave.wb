@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+   <!-- Page principale -->
+   <url>
+      <loc>http://discode-studio.github.io/shortwave.bot/index.html</loc>
+      <lastmod>2024-09-12</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>1.0</priority>
+   </url>
+
+   <!-- alarmrl -->
+   <url>
+      <loc>http://discode-studio.github.io/shortwave.bot/alarmrl.html</loc>
+      <lastmod>2024-09-11</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- e12 -->
+   <url>
+      <loc>http://discode-studio.github.io/shortwave.bot/e12.htm</loc>
+      <lastmod>2024-09-05</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+   </url>
+
+   <!-- pip -->
+   <url>
+      <loc>http://discode-studio.github.io/shortwave.bot/pip.htm</loc>
+      <lastmod>2024-09-12</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>0.9</priority>
+   </url>
+
+   <!-- pipd -->
+   <url>
+      <loc>http://discode-studio.github.io/shortwave.bot/pipd.html</loc>
+      <lastmod>2024-09-12</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- pipn -->
+   <url>
+      <loc>http://discode-studio.github.io/shortwave.bot/pipn.html</loc>
+      <lastmod>2024-09-12</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- pipv2 -->
+   <url>
+      <loc>http://discode-studio.github.io/shortwave.bot/pipv2.html</loc>
+      <lastmod>2024-09-12</lastmod>
+      <changefreq>daily</changefreq>
+      <priority>0.8</priority>
+   </url>
+
+   <!-- rusguy -->
+   <url>
+      <loc>http://discode-studio.github.io/shortwave.bot/rusguy.htm</loc>
+      <lastmod>2024-09-05</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+   </url>
+
+   <!-- triangle -->
+   <url>
+      <loc>http://discode-studio.github.io/shortwave.bot/triangle.htm</loc>
+      <lastmod>2024-09-05</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+   </url>
+
+   <!-- uvbrl -->
+   <url>
+      <loc>http://discode-studio.github.io/shortwave.bot/uvbrl.html</loc>
+      <lastmod>2024-09-05</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.6</priority>
+   </url>
+
+</urlset>
