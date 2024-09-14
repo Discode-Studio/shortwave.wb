@@ -166,16 +166,15 @@
     const reloadInterval = 1800000; // 30 minutes
     let countdownTimer;
 
+    let selectedFrequency = null;
+    let selectedMode = null;
+
     function confirmSettings() {
-        const frequency = document.getElementById('frequency').value;
-        const mode = document.getElementById('mode').value;
+        selectedFrequency = document.getElementById('frequency').value;
+        selectedMode = document.getElementById('mode').value;
 
-        if (frequency && mode) {
-            // Assemble the full URL with frequency and mode
-            const randomIndex = Math.floor(Math.random() * urls.length);
-            const newURL = urls[randomIndex] + frequency + mode + "z11";
-            iframe.src = newURL;
-
+        if (selectedFrequency && selectedMode) {
+            loadRandomPage(); // Charger la page avec les paramètres
             // Hide login box, show main content
             document.getElementById('loginBox').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
@@ -186,6 +185,17 @@
         }
     }
 
+    function loadRandomPage() {
+        const randomIndex = Math.floor(Math.random() * urls.length);
+        if (selectedFrequency && selectedMode) {
+            const newURL = urls[randomIndex] + selectedFrequency + selectedMode + "z11";
+            iframe.src = newURL;
+        } else {
+            iframe.src = urls[randomIndex]; // Juste pour s'assurer qu'il y a une URL par défaut
+        }
+        startCountdown(); // Redémarrer le compte à rebours après chaque rechargement
+    }
+
     function startCountdown() {
         let remainingTime = reloadInterval / 1000;
         clearInterval(countdownTimer);
@@ -194,14 +204,9 @@
             reloadInfo.innerText = `Next reload in ${remainingTime} seconds`;
             if (remainingTime <= 0) {
                 clearInterval(countdownTimer);
-                loadRandomPage();
+                loadRandomPage(); // Recharger la page à la fin du compte à rebours
             }
         }, 1000);
-    }
-
-    function loadRandomPage() {
-        const randomIndex = Math.floor(Math.random() * urls.length);
-        iframe.src = urls[randomIndex];
     }
 </script>
 
