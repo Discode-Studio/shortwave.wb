@@ -38,5 +38,11 @@ jobs:
           sudo cp app.war /var/lib/tomcat9/webapps/
           sudo systemctl restart tomcat9
 
+      - name: List Tomcat logs directory
+        run: |
+          sudo ls -la /var/log/tomcat9/
+          sudo ls -la /var/log/tomcat/
+
       - name: Check Tomcat logs
-        run: sudo cat /var/log/tomcat9/catalina.out
+        run: sudo cat /var/log/tomcat9/catalina.out || sudo cat /var/log/tomcat/catalina.out
+       
