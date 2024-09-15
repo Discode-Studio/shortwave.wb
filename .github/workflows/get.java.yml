@@ -1,0 +1,42 @@
+name: Java Servlet CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+
+      - name: Install Apache Tomcat
+        run: sudo apt-get install -y tomcat9 tomcat9-admin
+
+      - name: Download Servlet API
+        run: sudo apt-get install -y libservlet3.1-java
+
+      - name: Compile Java Servlet
+        run: javac -cp /usr/share/java/servlet-api-3.1.jar StreamRedirectServlet.java
+
+      - name: Package into WAR file
+        run: jar -cvf app.war StreamRedirectServlet.class
+
+      - name: Deploy WAR to Tomcat
+        run: |
+          sudo cp app.war /var/lib/tomcat9/webapps/
+          sudo systemctl restart tomcat9
+
+      - name: Check Tomcat logs
+        run: sudo cat /var/log/tomcat9/catalina.out
