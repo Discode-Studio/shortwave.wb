@@ -14,6 +14,8 @@
 <meta name="robots" content="index, follow">
 </head>
 <script type="module" src="time.js"></script>
+<!-- sdrplayer can have malfunction, if it's have some please report it! -->
+<script src="sdrplayer.js"></script>
 <script type="module">
                 // Import the functions you need from the SDKs you need
                 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
@@ -136,9 +138,12 @@
         </div>
         <nav>
             <ul>
-                <li><a href="http://websdr.org">WebSDR</a> <a href="http://rx.kiwisdr.com">KiwiSDR</a> <a href="openwebrx.de">OpenWebrx</a></li>
+                <li><a href="http://websdr.org">WebSDR</a> <a href="http://rx.kiwisdr.com">KiwiSDR</a> <a href="http://openwebrx.de">OpenWebrx</a></li>
             </ul>
         </nav>
+         <b><div class="date" id="datetime">
+        <!-- Date et Heure seront insérés ici -->
+    </div></b>
     </header>
 
     <main>
@@ -160,6 +165,7 @@
           <section class="cube">
             <ul>
               <li><a href="uvbrl.html">UVB-76 AutoReload</a></li>
+              <li><a href="uvbrlbest.html">UVB-76 AutoReload (Best SDR Only)</a></li>
               <li><a href="alarmrl.html">The alarm AutoReload</a></li>
               <li><a href="pip.htm">The PIP & PIPV2 AutoReload</a></li>
               <li><a href="freerl.html">Free frequency AutoReload</a></li>
@@ -172,9 +178,6 @@
             <h3>SDR and Time of ionosphere</h3>
             <section class="cube">
                 <center>
-                  <b><div class="date" id="datetime">
-        <!-- Date et Heure seront insérés ici -->
-    </div></b>
                     <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!">
                         <img src="https://www.hamqsl.com/solar101vhfpic.php">
                     </a>
@@ -198,7 +201,6 @@
             </section>
         </section>
         <br>
-        <script src="/sdrplayer.js"></script>
 <style>
   .controls button {
    background-color: transparent;
@@ -213,6 +215,15 @@
     max-width: 30px;
   }
 </style>
+ <section class="cube" style="width: 85%; margin-left: 7.5%">
+      <h3 style="margin-top: 20px;"><a href="https://web.libera.chat/#priyom">Priyom IRC channel</a><!--<a href="https://kiwiirc.com/client/irc.libera.chat/#priyom">Priyom IRC channel</a>--> / <a href="https://discord.gg/788JPdSgsd">Discord server</a></h3>
+      <p>Meet the Priyom team in our IRC chatroom! If you have your own client, connect to the Libera network and join the #priyom channel. If you are on Discord, you can find us <a href="https://discord.gg/788JPdSgsd">there</a> as well.
+        Both chat rooms are bridged together and have the same content, you're not missing out anything by being in one rather than the other.</p>    
+      <p>However, you <em>are</em> missing out if you're not joining the chat at all. Priyom without IRC is like shortwave without sound :-)</p>    
+      <iframe src="https://web.libera.chat/?theme=nightswatch#priyom" style="border:0; width: 100%; height:450px;"></iframe>
+      <!--<iframe src="https://kiwiirc.com/client/irc.libera.chat:+6697/?theme=cli#priyom" style="border:0; width:100%; height:450px;"></iframe>-->
+    </section>
+        <br>
 <div class="content">
     <h3>SDR Player</h3>
     <div class="cube">
@@ -227,15 +238,15 @@
             <option value="http://kiwi-kuo.aprs.fi:8073/">Kuopio aprs.fi</option>
             <option value="http://81.166.116.237:8073/">Tjelta Norway</option>
             <option value="https://khv.swl.su/">RussiaSWL</option>
-            <option value="http://80.146.82.2:8073/">DL3ZID</option>
             <option value="http://fsdr.duckdns.org/">DuckDNS Hungary</option>
-            <option value="http://188.162.63.103:8073/">Saratov (good for airhorn)</option>
             <option value="http://oh3aa.dy.fi:18073/">OH3AA (Finland)</option>
+            <option value="http://kiwi-vih.aprs.fi:8073/">Vihti (Finland)</option>
             <option value="" disabled>> OpenWebrx</option>
             <option value="https://2.websdr.jestok.com/">SR4DON (OpenWebrx+)(Poland)</option>
             <option value="http://jimjackii.no-ip.org/owrx/">EDDC2 (Germany)</option>
             <option value="" disabled>> YouTube Stream</option>
             <option value="https://www.youtube.com/embed/8h_D2P0iqMk?si=wdQTQ08fkEwVqoDH">The SWL Channel</option>
+            <option value="https://www.youtube.com/embed/live_stream?channel=UCIVC25nLsgvCoJOkQFpvU_Q">BuzzerUvb76Fan</option>
             <option value="" disabled>> Experimental</option>
             <option value="http://discode-studio.github.io/shortwave.bot/">Signabroam</option>
         </select>
@@ -280,12 +291,15 @@
         </section>
         <br>
         <section class="content">
-          <h3>Known pirates</h3>
+          <h3>Swpedia</h3>
           <section class="cube">
-            <h3>UVB-76:</h3>
+            <h3>UVB-76 Pirates:</h3>
             <li><a href="triangle.htm">∆∆∆ / ∆X3 "The3Triangle"</a></li>
             <li><a href="e12.htm">E12 [unknown]</a></li>
             <li><a href="rusguy.htm">Russian guy [unknown]</a></li>
+            <br>
+            <h3>Stations:</h3>
+            Click <a href="swpedia.html">here</a> to access!
           </section>
         </section>
     </main>
