@@ -13,15 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: '1.23'  # Changez ceci selon la version de Go requise par Caddy
-
-      - name: Install Caddy
+      - name: Download Caddy
         run: |
-          go install github.com/caddyserver/caddy/v2@latest
-          echo "$GOPATH/bin" >> $GITHUB_PATH
+          curl -LO "https://github.com/caddyserver/caddy/releases/latest/download/caddy_2.8.4_linux_amd64.tar.gz"
+          tar -xzf caddy_2.8.4_linux_amd64.tar.gz
+          sudo mv caddy /usr/local/bin/
+          sudo chmod +x /usr/local/bin/caddy
 
       - name: Run Caddy
         run: caddy run --config ./Caddyfile
