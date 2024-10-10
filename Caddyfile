@@ -1,4 +1,4 @@
-191.233.144.0:8080 {
+:8080 {
     reverse_proxy /solarxml* https://www.hamqsl.com {
         header_up Access-Control-Allow-Origin *
         header_up Host www.hamqsl.com
