@@ -49,7 +49,7 @@
                 statusbar.style.display = "block";
 
                 try {
-                    const data = await fetch("/solarxml")
+                    const data = await fetch("/propdata")
                         .then(r => {
                             if (!r.ok) throw Error(`response code: ${r.status} ${r.statusText}`);
                             return r;
