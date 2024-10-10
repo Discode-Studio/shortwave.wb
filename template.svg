@@ -444,4 +444,69 @@
              id="tspan1402">This is unlikely but may happen. If so, please wait for </tspan></tspan><tspan
            x="44.925781"
            y="984.29844"
-           id="tspan14
+           id="tspan1406">the next reload.</tspan></text>
+      <text
+         xml:space="preserve"
+         id="text9615"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;line-height:0;font-family:Cantarell;-inkscape-font-specification:Cantarell;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect9617);display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:6.7;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1"
+         transform="translate(-677.56815,-184.86963)"
+         x="0"
+         y="0"><tspan
+           x="702.64648"
+           y="907.37019"
+           id="tspan1410"><tspan
+             style="line-height:1.1"
+             id="tspan1408">Every 30 minutes, the stream will </tspan></tspan><tspan
+           x="702.64648"
+           y="939.63679"
+           id="tspan1414"><tspan
+             style="line-height:1.1"
+             id="tspan1412">automatically reload the receiver.
+</tspan></tspan><tspan
+           x="702.64648"
+           y="971.90339"
+           id="tspan1418"><tspan
+             style="line-height:1.1"
+             id="tspan1416">When that happens, it will go black </tspan></tspan><tspan
+           x="702.64648"
+           y="1004.17"
+           id="tspan1422"><tspan
+             style="line-height:1.1"
+             id="tspan1420">for a short time, then the waterfall </tspan></tspan><tspan
+           x="702.64648"
+           y="1036.4366"
+           id="tspan1426"><tspan
+             style="line-height:1.1"
+             id="tspan1424">should start building up again.</tspan></tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;line-height:1.1;font-family:Cantarell;-inkscape-font-specification:Cantarell;fill:#ffffff;fill-opacity:1;stroke-width:6.7;stroke-linejoin:bevel"
+         x="23.712992"
+         y="978.15399"
+         id="text1268"><tspan
+           sodipodi:role="line"
+           id="tspan1266"
+           x="23.712992"
+           y="978.15399">HF propagation data from https://www.hamqsl.com/solar.html.</tspan></text>
+    </g>
+  </g>
+  <metadata
+     id="metadata501">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
