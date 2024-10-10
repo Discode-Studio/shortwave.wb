@@ -1,5 +1,9 @@
 191.233.144.0 {
-    reverse_proxy /solarxml https://www.hamqsl.com/solarxml.php {
+    @solarxml {
+        path /solarxml*
+    }
+    reverse_proxy @solarxml https://www.hamqsl.com {
         header_up Access-Control-Allow-Origin *
+        uri /solarxml.php
     }
 }
