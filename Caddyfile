@@ -1,6 +1,6 @@
 :8080 {
 	bind 127.0.0.1 [::1]
-	handle_path /solarxml {
+	handle_path /propdata {
 		rewrite * /solarxml.php
 		reverse_proxy https://hamqsl.com {
 			header_up Host {upstream_hostport}
