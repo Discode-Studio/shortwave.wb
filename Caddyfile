@@ -1,0 +1,5 @@
+191.233.144.0 {
+    reverse_proxy /solarxml https://www.hamqsl.com/solarxml.php {
+        header_up Access-Control-Allow-Origin *
+    }
+}
