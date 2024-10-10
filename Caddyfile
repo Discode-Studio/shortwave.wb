@@ -1,9 +1,8 @@
-191.233.144.0 {
-    @solarxml {
-        path /solarxml*
-    }
-    reverse_proxy @solarxml https://www.hamqsl.com {
+191.233.144.0:7070 {
+    reverse_proxy /solarxml* https://www.hamqsl.com {
         header_up Access-Control-Allow-Origin *
-        uri /solarxml.php
+        header_up Host www.hamqsl.com
+        header_up X-Forwarded-For {remote}
+        header_up X-Forwarded-Proto {scheme}
     }
 }
