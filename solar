@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Données Solaires</title>
+    <style>
+        #solar-info {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .field, .band, .phenomenon {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        .field-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .band-info, .phenomenon-info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="solar-info"></div>
+
+<script>
+async function fetchSolarData() {
+    const targetUrl = '/solarxml'; // Remplace par l'URL de ton proxy Caddy
+    
+    try {
+        const response = await fetch(targetUrl);
+        const xmlText = await response.text();
+
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+        const solarInfoDiv = document.getElementById('solar-info');
+
+        const solarFlux = xmlDoc.getElementsByTagName('solarflux')[0].textContent;
+        const aIndex = xmlDoc.getElementsByTagName('aindex')[0].textContent;
+        const kIndex = xmlDoc.getElementsByTagName('kindex')[0].textContent;
+        const kIndexStatus = xmlDoc.getElementsByTagName('kindexnt')[0].textContent;
+        const xRay = xmlDoc.getElementsByTagName('xray')[0].textContent;
+        const sunspots = xmlDoc.getElementsByTagName('sunspots')[0].textContent;
+        const geomagField = xmlDoc.getElementsByTagName('geomagfield')[0].textContent;
+        const signalNoise = xmlDoc.getElementsByTagName('signalnoise')[0].textContent;
+        const protonFlux = xmlDoc.getElementsByTagName('protonflux')[0].textContent;
+        const solarWind = xmlDoc.getElementsByTagName('solarwind')[0].textContent;
+        const magneticField = xmlDoc.getElementsByTagName('magneticfield')[0].textContent;
+
+        const fields = [
+            { name: 'Flux Solaire', value: solarFlux },
+            { name: 'Indice A', value: aIndex },
+            { name: 'Indice K', value: kIndex + ' (' + kIndexStatus + ')' },
+            { name: 'Rayons X', value: xRay },
+            { name: 'Taches Solaires', value: sunspots },
+            { name: 'Champ Géomagnétique', value: geomagField },
+            { name: 'Bruit du Signal', value: signalNoise },
+            { name: 'Flux de Protons', value: protonFlux },
+            { name: 'Vent Solaire', value: solarWind + ' km/s' },
+            { name: 'Champ Magnétique', value: magneticField + ' nT' }
+        ];
+
+        fields.forEach(field => {
+            const fieldDiv = document.createElement('div');
+            fieldDiv.classList.add('field');
+
+            const fieldNameDiv = document.createElement('div');
+            fieldNameDiv.classList.add('field-name');
+            fieldNameDiv.textContent = field.name;
+
+            const fieldValueDiv = document.createElement('div');
+            fieldValueDiv.classList.add('field-value');
+            fieldValueDiv.textContent = field.value;
+
+            fieldDiv.appendChild(fieldNameDiv);
+            fieldDiv.appendChild(fieldValueDiv);
+            solarInfoDiv.appendChild(fieldDiv);
+        });
+
+        const bands = xmlDoc.getElementsByTagName('band');
+        const bandInfoDiv = document.createElement('div');
+        bandInfoDiv.classList.add('band-info');
+        const bandTitle = document.createElement('h3');
+        bandTitle.textContent = 'Conditions des Bandes HF';
+        bandInfoDiv.appendChild(bandTitle);
+
+        Array.from(bands).forEach(band => {
+            const bandDiv = document.createElement('div');
+            bandDiv.classList.add('band');
+            bandDiv.textContent = `${band.getAttribute('name')} (${band.getAttribute('time')}): ${band.textContent}`;
+            bandInfoDiv.appendChild(bandDiv);
+        });
+
+        solarInfoDiv.appendChild(bandInfoDiv);
+
+        const phenomena = xmlDoc.getElementsByTagName('phenomenon');
+        const phenomenonInfoDiv = document.createElement('div');
+        phenomenonInfoDiv.classList.add('phenomenon-info');
+        const phenomenonTitle = document.createElement('h3');
+        phenomenonTitle.textContent = 'Phénomènes VHF';
+        phenomenonInfoDiv.appendChild(phenomenonTitle);
+
+        Array.from(phenomena).forEach(phenomenon => {
+            const phenomenonDiv = document.createElement('div');
+            phenomenonDiv.classList.add('phenomenon');
+            phenomenonDiv.textContent = `${phenomenon.getAttribute('name')} (${phenomenon.getAttribute('location')}): ${phenomenon.textContent}`;
+            phenomenonInfoDiv.appendChild(phenomenonDiv);
+        });
+
+        solarInfoDiv.appendChild(phenomenonInfoDiv);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des données solaires:', error);
+    }
+}
+
+// Appelle la fonction pour récupérer les données
+fetchSolarData();
+</script>
+
+</body>
+</html>
