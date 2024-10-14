@@ -60,11 +60,12 @@
             <h1 id="UTCTime">UTC</h1>
             <h1 id="MSKTime">MSK</h1>
             <h1 id="dateMSK"></h1>
-            <h1 id="desc1">UVB-76</h1>
-            <h1 id="desc2"></h1>
-            <h1 id="desc3"></h1>
-            <h1 id="desc4"></h1>
-            <h1 id="otherText"></h1>
+            <h1 id="desc1"><img src="https://www.hamqsl.com/solar101vhf.php" height="200px"></a></h1>
+            <h1 id="desc2"><br><br><br>Using: KeamsOS AutoReload</h1>
+            <h1 id="desc3"><br><br><br>UVB-76 Livestream</h1>
+            <h1 id="desc4"><br><br><br>Reloading every 30 minutes.<br>
+            If no image = Full KiwiSDR.</h1>
+            <h1 id="otherText">Subscribe!</h1>
             <h1 id="dateUTC"></h1>
             <h1 id="timer"></h1>
             <h1 id="thanks"></h1>
@@ -88,7 +89,7 @@
                 "The Sq. Whl.,n|5367/3363.5 kHz,48px,110px,830px",
             ];
             const socialsList = [
-                "yt,@MirossOffYT,#FE0000"
+                "yt,@MirossOffYT Official,#FE0000"
             ];
             var currentSocial = 0;
             const donators = ["GG_Vlados", "Rock_XL"];
@@ -161,5 +162,14 @@
             setInterval(updateClocks, 500);
             updateClocks();
         </script>
+        <script>
+    function reloadImage() {
+        const imgElement = document.querySelector("h1 img");
+        const currentSrc = imgElement.src;
+        imgElement.src = currentSrc + '?t=' + new Date().getTime(); // Ajoute un timestamp pour éviter la mise en cache
+    }
+
+    setInterval(reloadImage, 600000); // 10 minutes = 600000 ms
+</script>
     </head>
 </html>
