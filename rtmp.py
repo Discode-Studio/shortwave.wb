@@ -1,4 +1,5 @@
 import subprocess
+import ffpmeg
 
 # Commande ffmpeg pour envoyer une vidéo noire sans son
 command = [
