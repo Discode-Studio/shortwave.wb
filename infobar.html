@@ -82,7 +82,7 @@
             <h1 id="desc4"></h1>
             <h1 id="fa2q">> Fast FAQ</h1>
             <p id="fa2q">- You have to know:<br>
-            The stream is reloading every 30 seconds <br>to avoid the time limit<br>
+            The stream is reloading every 30minutes<br>to avoid the time limit<br>
             - Why is the stream black?<br>
             If the stream (SDR) is black,<br>
             it's because it's maybe full or unavailable.</p>
@@ -121,7 +121,7 @@
                 "yt,UVB-76 Livestream,#FE0000",
                 "yt,FAQ in description"
             ];
-            var currentSocial = 6;
+            var currentSocial = 0;
             const donators = ["NaN"];
             var currentDonator = 0;
 
@@ -187,7 +187,6 @@
                 funnyElement.innerText = ""
             }
 
-            setInterval(updateSocials, 6000);
             setInterval(updateDonators, 3000);
             setInterval(updateClocks, 500);
             updateClocks();
