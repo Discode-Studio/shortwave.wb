@@ -49,7 +49,7 @@
 
 <div id="reloadText">
     KeamsOS AutoReload
-    <div id="reloadInfo">reloading SDR</div>
+    <div id="reloadInfo">reloading Page</div>
 </div>
 
 <iframe id="webFrame" src=""></iframe>
@@ -62,11 +62,11 @@
     const iframe = document.getElementById('webFrame');
     const reloadText = document.getElementById('reloadText');
     const reloadInfo = document.getElementById('reloadInfo');
-    const reloadInterval = 600000; // 30 minutes
+    const reloadInterval = 60000; // 30 minutes
     let countdownTimer;
 
     function loadRandomPage() {
-        reloadInfo.innerText = "reloading SDR";
+        reloadInfo.innerText = "reloading page";
         const randomIndex = Math.floor(Math.random() * urls.length);
         iframe.src = urls[randomIndex];
     }
@@ -81,6 +81,7 @@
         countdownTimer = setInterval(() => {
             remainingTime--;
             reloadInfo.innerText = `Next reload in ${remainingTime} seconds`;
+            console.log(`${remainingTime}`);
             if (remainingTime <= 0) {
                 clearInterval(countdownTimer);
                 loadRandomPage(); // Recharger la page à la fin du compte à rebours
