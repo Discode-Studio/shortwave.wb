@@ -219,7 +219,7 @@
             const muf = xmlData.querySelector('muf').textContent;
 
             // Mettre à jour le contenu de desc1 et desc2 avec signalNoise et MUF
-            document.getElementById('desc1').innerHTML = `Signal Noise: ${signalNoise}`;
+            document.getElementById('desc1').innerHTML = `<id id="muf">Signal Noise:</id> ${signalNoise}`;
             document.getElementById('desc2').innerHTML = `<id id="muf">MUF:</id> ${muf}`;
 
             // Mettre à jour les couleurs en fonction de signalNoise et MUF
@@ -266,13 +266,12 @@
             return;
         }
 
-        // Appliquer des couleurs basées sur le signalNoise
         switch (signalNoise.toLowerCase().trim()) {
             case 's1-s2':
                 desc1Element.style.color = 'yellow';
                 break;
             case 'S2-S3':
-                desc1Element.style.color = 'lightorange';
+                desc1Element.style.color = '#FFE754';
                 break;
             case 's3-s4':
                 desc1Element.style.color = 'orange';
@@ -284,13 +283,13 @@
                 desc1Element.style.color = 'darkred';
                 break;
             default:
-                desc1Element.style.color = 'white'; // Couleur par défaut
+                desc1Element.style.color = 'white';
         }
 
         // Même logique pour desc2 (MUF)
         const desc2Element = document.getElementById('desc2');
         if (desc2Element) {
-            desc2Element.style.color = (muf === 'NoRpt') ? 'green' : 'orange';
+            desc2Element.style.color = (muf === 'NoRpt') ? 'lime' : 'orange';
         }
     }
 
@@ -301,7 +300,7 @@
         } else if (bandValue === 'fair') {
             element.style.color = 'yellow';
         } else if (bandValue === 'good') {
-            element.style.color = 'green';
+            element.style.color = 'lime';
         } else {
             element.style.color = 'white'; // Couleur par défaut si aucune valeur ne correspond
         }
