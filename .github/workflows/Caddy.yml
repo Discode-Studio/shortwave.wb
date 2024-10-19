@@ -13,12 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Download Caddy
+      - name: Download rtmp
         run: |
-          curl -LO "https://github.com/caddyserver/caddy/releases/latest/download/caddy_2.8.4_linux_amd64.tar.gz"
-          tar -xzf caddy_2.8.4_linux_amd64.tar.gz
-          sudo mv caddy /usr/local/bin/
-          sudo chmod +x /usr/local/bin/caddy
-
-      - name: Run Caddy
-        run: caddy run --config ./Caddyfile
+          pip install ffmpeg subprocess
+      - name: Run rtmp
+        run: python rtmp.py
