@@ -12,7 +12,7 @@
                 font-family: 'Cantarell';
             }
 
-            #MSKTime, #dateMSK, #clockUTC, #desc1, #desc2, #desc3, #desc4, #otherText, #shortwaveStuff, #dateUTC, #socialText, #socialImg, #faq, #timer, #clockMSK, #UTCTime, #MSKTime {
+            #MSKTime, #dateMSK, #clockUTC, #desc1, #desc2, #desc3, #desc4, #otherText, #shortwaveStuff, #dateUTC, #socialText, #socialImg, #faq, #timer, #clockMSK, #UTCTime, #MSKTime, #fa2q {
                 z-index: 100;
                 position: absolute;
                 color: white;
@@ -29,15 +29,15 @@
             #MSKTime { left: 20px; top: 150px; font-size: 75px; }
 
             #desc1 { left: 20px; top: 300px; font-size: 45px; }
-            #desc2 { left: 20px; top: 345px; font-size: 45px; }
-            #desc3 { left: 20px; top: 390px; font-size: 45px; }
-            #desc4 { left: 20px; top: 435px; font-size: 45px; }
+            #desc2 { left: 20px; top: 360px; font-size: 45px; }
+            #desc3 { left: 20px; top: 415px; font-size: 45px; }
+            #desc4 { left: 20px; top: 470px; font-size: 45px; }
 
-            #otherText { left: 110px; top: 780px; font-size: 70px; }
+            #otherText { left: 50px; top: 830px; font-size: 50px; }
             #timer { left: 20px; top: 650px; font-size: 30px; }
 
             #socialImg { left: 30px; top: 975px; font-size: 50px; }
-            #socialText { left: 50px; top: 935px; font-size: 50px; }
+            #socialText { left: 30px; top: 935px; font-size: 50px; }
 
             #faq { left: 10px; top: 1035px; font-size: 20.5px; }
 
@@ -51,6 +51,22 @@
                 animation-timing-function: cubic-bezier(1,0,0,1);
             }
             #socialText, #socialImg { animation-direction: reverse;  }
+            
+            #muf {
+              color: white;
+            }
+            
+            p#fa2q {
+              left: 20px;
+              top: 590px;
+              font-size: 30px;
+              text-decoration: underline
+            }
+            h1#fa2q {
+              left: 20px;
+              top: 520px;
+              font-size: 50px
+            }
         </style>
 
         <div id="main">  
@@ -60,11 +76,17 @@
             <h1 id="UTCTime">UTC</h1>
             <h1 id="MSKTime">MSK</h1>
             <h1 id="dateMSK"></h1>
-            <h1 id="desc1"><img src="https://www.hamqsl.com/solar101vhf.php" height="200px"></a></h1>
-            <h1 id="desc2"><br><br><br>KeamsOS AutoReload</h1>
-            <h1 id="desc3" id="station"><br><br><br><br>UVB-76 Livestream 🔴</h1>
+            <h1 id="desc1"></h1>
+            <h1 id="desc2"></h1>
+            <h1 id="desc3" id="station"></h1>
             <h1 id="desc4"></h1>
-            <h1 id="otherText">Subscribe!</h1>
+            <h1 id="fa2q">> Fast FAQ</h1>
+            <p id="fa2q">- You have to know:<br>
+            The stream is reloading every 30 seconds <br>to avoid the time limit<br>
+            - Why is the stream black?<br>
+            If the stream (SDR) is black,<br>
+            it's because it's maybe full or unavailable.</p>
+            <h1 id="otherText">UVB-76 Livestream 🔴</h1>
             <h1 id="dateUTC"></h1>
             <h1 id="timer"></h1>
             <h1 id="thanks"></h1>
@@ -81,7 +103,7 @@
             <button onclick="usePreset(document.getElementById('presetNumber').value)">Use Preset</button>
         </div>
         
-        <script>
+       <script>
             const presets = [
                 "The Goose,n|4310/3243 kHz,50px,120px,810px",
                 "The Pip,n|5448/3756 kHz,50px,120px,810px",
@@ -179,5 +201,120 @@
 
     setInterval(reloadImage, 60000); // 10 minutes = 600000 ms
 </script>
+
+        <!-- Script pour récupérer les données RSS et mettre à jour les informations -->
+      <script>
+    const apiUrl = 'https://www.hamqsl.com/solarrss.php';
+    const allOriginsUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+
+    // Fonction pour récupérer et afficher les données
+    function fetchData() {
+        fetch(allOriginsUrl)
+          .then(response => response.json())
+          .then(data => {
+            const parser = new DOMParser();
+            const xmlData = parser.parseFromString(data.contents, "text/xml");
+
+            // Récupérer les informations de signal noise et MUF
+            const signalNoise = xmlData.querySelector('signalnoise').textContent;
+            const muf = xmlData.querySelector('muf').textContent;
+
+            // Mettre à jour le contenu de desc1 et desc2 avec signalNoise et MUF
+            document.getElementById('desc1').innerHTML = `Signal Noise: ${signalNoise}`;
+            document.getElementById('desc2').innerHTML = `<id id="muf">MUF:</id> ${muf}`;
+
+            // Mettre à jour les couleurs en fonction de signalNoise et MUF
+            updateColors(signalNoise, muf);
+
+            // Récupérer les données pour 80m-40m day et night
+            const bandDay = xmlData.querySelector('band[name="80m-40m"][time="day"]').textContent.trim().toLowerCase();
+            const bandNight = xmlData.querySelector('band[name="80m-40m"][time="night"]').textContent.trim().toLowerCase();
+
+            // Afficher les valeurs récupérées dans la console pour diagnostic
+            console.log("Valeur de bandDay:", bandDay);
+            console.log("Valeur de bandNight:", bandNight);
+
+            // Mettre à jour le contenu de desc3 pour les données day et desc4 pour night
+            const desc3Element = document.getElementById('desc3');
+            const desc4Element = document.getElementById('desc4');
+
+            desc3Element.innerHTML = `<id id="muf">80m Day:</id> ${bandDay}`;
+            desc4Element.innerHTML = `<id id="muf">80m Night:</id> ${bandNight}`;
+
+            // Appliquer les couleurs pour les bandes day et night
+            applyBandColor(bandDay, desc3Element);
+            applyBandColor(bandNight, desc4Element);
+          })
+          .catch(err => console.error('Erreur lors de la récupération des données:', err));
+    }
+
+    // Appel initial pour récupérer les données au chargement de la page
+    fetchData();
+
+    // Recharger les données toutes les 60 secondes (60000 millisecondes)
+    setInterval(fetchData, 60000);
+
+    // Fonction pour mettre à jour les couleurs en fonction de signalNoise et MUF
+    function updateColors(signalNoise, muf) {
+        console.log("Valeur de signalNoise : ", signalNoise); // Pour voir la valeur exacte dans la console
+
+        // Récupérer l'élément desc1
+        const desc1Element = document.getElementById('desc1');
+
+        // Vérifier si l'élément existe bien
+        if (!desc1Element) {
+            console.error("L'élément avec l'ID 'desc1' n'existe pas.");
+            return;
+        }
+
+        // Appliquer des couleurs basées sur le signalNoise
+        switch (signalNoise.toLowerCase().trim()) {
+            case 's1-s2':
+                desc1Element.style.color = 'yellow';
+                break;
+            case 'S2-S3':
+                desc1Element.style.color = 'lightorange';
+                break;
+            case 's3-s4':
+                desc1Element.style.color = 'orange';
+                break;
+            case 's4-s5':
+                desc1Element.style.color = 'red';
+                break;
+            case 's5':
+                desc1Element.style.color = 'darkred';
+                break;
+            default:
+                desc1Element.style.color = 'white'; // Couleur par défaut
+        }
+
+        // Même logique pour desc2 (MUF)
+        const desc2Element = document.getElementById('desc2');
+        if (desc2Element) {
+            desc2Element.style.color = (muf === 'NoRpt') ? 'green' : 'orange';
+        }
+    }
+
+    // Fonction pour appliquer les couleurs aux bandes en fonction des valeurs poor, fair, good
+    function applyBandColor(bandValue, element) {
+        if (bandValue === 'poor') {
+            element.style.color = 'red';
+        } else if (bandValue === 'fair') {
+            element.style.color = 'yellow';
+        } else if (bandValue === 'good') {
+            element.style.color = 'green';
+        } else {
+            element.style.color = 'white'; // Couleur par défaut si aucune valeur ne correspond
+        }
+    }
+</script>
+
+
+
+        <!-- Script pour la gestion des textes sociaux et des donateurs (inchangé) -->
+        <script>
+            setInterval(updateSocials, 6000);
+            setInterval(updateDonators, 3000);
+        </script>
     </head>
 </html>
