@@ -15,6 +15,6 @@ jobs:
 
       - name: Download rtmp
         run: |
-          pip install ffmpeg subprocess
+          pip install ffmpeg
       - name: Run rtmp
         run: python rtmp.py
