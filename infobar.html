@@ -61,8 +61,8 @@
             <h1 id="MSKTime">MSK</h1>
             <h1 id="dateMSK"></h1>
             <h1 id="desc1"><img src="https://www.hamqsl.com/solar101vhf.php" height="200px"></a></h1>
-            <h1 id="desc2"><br><br><br>Using:KeamsOS AutoReload</h1>
-            <h1 id="desc3"><br><br><br><br>Stalingrad Livestream 🔴</h1>
+            <h1 id="desc2"><br><br><br>KeamsOS AutoReload</h1>
+            <h1 id="desc3" id="station"><br><br><br><br>UVB-76 Livestream 🔴</h1>
             <h1 id="desc4"></h1>
             <h1 id="otherText">Subscribe!</h1>
             <h1 id="dateUTC"></h1>
@@ -86,20 +86,21 @@
                 "The Goose,n|4310/3243 kHz,50px,120px,810px",
                 "The Pip,n|5448/3756 kHz,50px,120px,810px",
                 "The Sq. Whl.,n|5367/3363.5 kHz,48px,110px,830px",
+                "UVB-76,4625 kHz,48px,110px"
             ];
             const socialsList = [
                 
                 "yt,R1 Blackout coming...",
-                "yt,R1 Blackout Occured...",
+                "yt,R2 Blackout Occured...",
                 "yt,Join my discord server",
                 "yt,Discord server in chat,#FE0000",
-                "yt,website: Signabroam",
+                "yt,Website: Signabroam",
                 "yt,@MirossOffYT Official,#FE0000",
-                "yt, Stalingrad qLivestream,#FE0000",
+                "yt,UVB-76 Livestream,#FE0000",
                 "yt,FAQ in description"
             ];
-            var currentSocial = 0;
-            const donators = ["GG_Vlados", "Rock_XL"];
+            var currentSocial = 6;
+            const donators = ["NaN"];
             var currentDonator = 0;
 
             function usePreset(presetNumber) {
@@ -176,7 +177,7 @@
         imgElement.src = currentSrc + '?t=' + new Date().getTime(); // Ajoute un timestamp pour éviter la mise en cache
     }
 
-    setInterval(reloadImage, 600000); // 10 minutes = 600000 ms
+    setInterval(reloadImage, 60000); // 10 minutes = 600000 ms
 </script>
     </head>
 </html>
