@@ -18,6 +18,7 @@ jobs:
           pip install ffmpeg 
           sudo apt-get install ffmpeg 
           npm i puppeteer
+          sudo apt-get install xvfb
           
       - name: Run rtmp
-        run: node rtmp.js
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1280x720x24' node rtmp.js
