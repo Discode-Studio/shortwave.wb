@@ -15,8 +15,9 @@ jobs:
 
       - name: Download rtmp
         run: |
-          pip install ffmpeg puppeteer
-          sudo apt-get install ffmpeg puppeteer
+          pip install ffmpeg 
+          sudo apt-get install ffmpeg 
+          npm i puppeteer
           
       - name: Run rtmp
         run: python rtmp.py
