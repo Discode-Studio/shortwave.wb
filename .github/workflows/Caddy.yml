@@ -20,4 +20,4 @@ jobs:
           npm i puppeteer
           
       - name: Run rtmp
-        run: python rtmp.py
+        run: node rtmp.js
