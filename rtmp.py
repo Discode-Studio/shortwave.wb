@@ -5,7 +5,7 @@ command = [
     'ffmpeg',
     '-re',                      # Lire à la vitesse réelle
     '-stream_loop', '-1',        # Répéter la vidéo en boucle infinie
-    '-i', 'rtmp.mp4',  # Vidéo source (remplacez par le chemin de votre vidéo)
+    '-i', 'stream.htm',  # Vidéo source (remplacez par le chemin de votre vidéo)
     '-f', 'lavfi',               # Utilisation du filtre lavfi pour l'audio
     '-i', 'anullsrc=r=44100:cl=stereo',  # Générer un audio silencieux (44.1 kHz, stéréo)
     '-shortest',                 # S'assurer que la durée audio correspond à la vidéo
