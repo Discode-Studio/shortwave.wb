@@ -16,5 +16,7 @@ jobs:
       - name: Download rtmp
         run: |
           pip install ffmpeg
+          sudo apt-get install ffmpeg
+          
       - name: Run rtmp
         run: python rtmp.py
