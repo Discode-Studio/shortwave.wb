@@ -1,9 +1,9 @@
 name: Run Caddy
 
 on:
-  push:
-    branches:
-      - main  # Changez ceci pour la branche de votre choix
+  schedule:
+    - cron: "01 */6 * * *"  # Toutes les 6 heures
+  workflow_dispatch:   
 
 jobs:
   run-caddy:
