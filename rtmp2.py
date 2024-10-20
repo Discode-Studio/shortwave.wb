@@ -5,7 +5,7 @@ command = [
     'ffmpeg',
     '-re',                      # Lire à la vitesse réelle
     '-stream_loop', '-1',        # Répéter la vidéo en boucle infinie
-    '-i', 'error.mp4',  # Vidéo source
+    '-i', 'UVB-76 音の移り変わり 1976~2024.mp4',  # Vidéo source
     '-c:v', 'libx264',           # Codeur vidéo H.264
     '-preset', 'veryfast',       # Réduction de la latence
     '-b:v', '3000k',             # Débit vidéo de 3000 kbps
@@ -15,7 +15,7 @@ command = [
     '-c:a', 'aac',               # Codeur audio AAC
     '-b:a', '128k',              # Débit audio de 128 kbps
     '-f', 'flv',                 # Format de sortie FLV pour RTMP
-    'rtmp://a.rtmp.youtube.com/live2/53qa-y81q-px7q-8g6y-78zb'  # Votre URL RTMP YouTube
+    'rtmp://a.rtmp.youtube.com/live2/sz87-dusv-psay-wsra-5xms'  # Votre URL RTMP YouTube
 ]
 
 # Exécution de la commande
