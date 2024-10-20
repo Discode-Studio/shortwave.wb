@@ -5,7 +5,7 @@ command = [
     'ffmpeg',
     '-re',                      # Lire à la vitesse réelle
     '-stream_loop', '-1',        # Répéter la vidéo en boucle infinie
-    '-i', 'UVB-76 音の移り変わり 1976~2024.mp4',  # Vidéo source
+    '-i', 'lv_0_20241020025552.mp4',  # Vidéo source
     '-c:v', 'libx264',           # Codeur vidéo H.264
     '-preset', 'veryfast',       # Réduction de la latence
     '-b:v', '3000k',             # Débit vidéo de 3000 kbps
