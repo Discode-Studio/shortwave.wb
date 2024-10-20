@@ -21,4 +21,4 @@ jobs:
           sudo apt-get install xvfb
           
       - name: Run rtmp
-        run: python rtmp2.py
+        run: python rtmp2.py & python rtmp.py
