@@ -1,33 +1,25 @@
 import subprocess
 
-# Création de l'image avec le texte
-text_image_command = [
-    'ffmpeg',
-    '-f', 'lavfi',
-    '-i', 'color=c=black:s=1280x720:d=5',
-    '-vf', "drawtext=text='Screen is back tomorrow...':fontcolor=white:fontsize=40:x=(W-w)/2:y=(H-h)/2",
-    '-y',
-    'text_image.png'
-]
-
-# Exécution de la commande pour créer l'image
-subprocess.run(text_image_command)
-
-# Commande pour diffuser l'audio et superposer l'image
+# Commande ffmpeg pour envoyer une vidéo en boucle avec audio silencieux
 command = [
     'ffmpeg',
-    '-thread_queue_size', '64',  # Ajustement de la taille de la file d'attente
-    '-stream_loop', '-1',
-    '-i', 'http://streams.printf.cc:8000/buzzer.ogg',
-    '-i', 'text_image.png',
-    '-c:a', 'aac',
-    '-b:a', '64k',  # Réduire le débit audio
-    '-c:v', 'libx264',
-    '-preset', 'veryfast',
-    '-shortest',
-    '-f', 'flv',
-    'rtmp://a.rtmp.youtube.com/live2/53qa-y81q-px7q-8g6y-78zb'
+    '-re',                      # Lire à la vitesse réelle
+    '-stream_loop', '-1',        # Répéter la vidéo en boucle infinie
+    '-i', 'http://streams.printf.cc:8000/buzzer.ogg',  # Vidéo source (remplacez par le chemin de votre vidéo)
+    '-f', 'lavfi',               # Utilisation du filtre lavfi pour l'audio
+    '-i', 'anullsrc=r=44100:cl=stereo',  # Générer un audio silencieux (44.1 kHz, stéréo)
+    '-shortest',                 # S'assurer que la durée audio correspond à la vidéo
+    '-c:v', 'libx264',           # Codeur vidéo H.264
+    '-preset', 'veryfast',       # Réduction de la latence
+    '-b:v', '3000k',             # Débit vidéo de 3000 kbps
+    '-maxrate', '3000k',         # Débit max pour éviter les variations
+    '-bufsize', '6000k',         # Taille du buffer
+    '-pix_fmt', 'yuv420p',       # Format des pixels compatible avec YouTube
+    '-c:a', 'aac',               # Codeur audio AAC (requis pour RTMP)
+    '-b:a', '128k',              # Débit audio de 128 kbps
+    '-f', 'flv',                 # Format de sortie FLV pour RTMP
+    'rtmp://a.rtmp.youtube.com/live2/53qa-y81q-px7q-8g6y-78zb'  # Votre URL RTMP YouTube
 ]
 
-# Exécution de la commande pour diffuser
+# Exécution de la commande
 subprocess.run(command)
