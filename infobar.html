@@ -12,7 +12,7 @@
                 font-family: 'Cantarell';
             }
 
-            #MSKTime, #dateMSK, #clockUTC, #desc1, #desc2, #desc3, #desc4, #otherText, #shortwaveStuff, #dateUTC, #socialText, #socialImg, #faq, #timer, #clockMSK, #UTCTime, #MSKTime, #fa2q {
+            #MSKTime, #dateMSK, #clockUTC, #desc1, #desc2, #desc3, #desc4, #otherText, #shortwaveStuff, #dateUTC, #socialText, #socialImg, #faq, #timer, #clockMSK, #UTCTime, #MSKTime, #fa2q, #desc5, #desc6 {
                 z-index: 100;
                 position: absolute;
                 color: white;
@@ -32,6 +32,7 @@
             #desc2 { left: 20px; top: 360px; font-size: 45px; }
             #desc3 { left: 20px; top: 415px; font-size: 45px; }
             #desc4 { left: 20px; top: 470px; font-size: 45px; }
+            #desc5 { left: 20px; top: 865px; font-size: 40px; }
 
             #otherText { left: 50px; top: 830px; font-size: 50px; }
             #timer { left: 20px; top: 650px; font-size: 30px; }
@@ -90,6 +91,7 @@
             <h1 id="dateUTC"></h1>
             <h1 id="timer"></h1>
             <h1 id="thanks"></h1>
+            <h1 id="desc5">Aurora power: G-</h1>
             <h1 id="socialText" style="color: #FE0000;">Loading infobar...</h1>
             <h1 id="faq">Infobar by @ShortwaveStuff, inspired by The SWL Channel</h1>
         </div>
@@ -111,9 +113,6 @@
                 "UVB-76,4625 kHz,48px,110px"
             ];
             const socialsList = [
-                
-                "yt,R1 Blackout coming...",
-                "yt,R2 Blackout Occured...",
                 "yt,Join my discord server",
                 "yt,Discord server in chat,#FE0000",
                 "yt,Website: Signabroam",
@@ -202,49 +201,43 @@
 </script>
 
         <!-- Script pour récupérer les données RSS et mettre à jour les informations -->
-      <script>
+    <script>
     const apiUrl = 'https://www.hamqsl.com/solarrss.php';
     const allOriginsUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
 
     // Fonction pour récupérer et afficher les données
     function fetchData() {
         fetch(allOriginsUrl)
-          .then(response => response.json())
-          .then(data => {
-            const parser = new DOMParser();
-            const xmlData = parser.parseFromString(data.contents, "text/xml");
+            .then(response => response.json())
+            .then(data => {
+                const parser = new DOMParser();
+                const xmlData = parser.parseFromString(data.contents, "text/xml");
 
-            // Récupérer les informations de signal noise et MUF
-            const signalNoise = xmlData.querySelector('signalnoise').textContent;
-            const muf = xmlData.querySelector('muf').textContent;
+                // Récupérer les informations de signal noise, MUF et aurora
+                const signalNoise = xmlData.querySelector('signalnoise').textContent;
+                const muf = xmlData.querySelector('muf').textContent;
+                const aurora = xmlData.querySelector('aurora').textContent; // Récupération de la valeur de l'aurore
 
-            // Mettre à jour le contenu de desc1 et desc2 avec signalNoise et MUF
-            document.getElementById('desc1').innerHTML = `<id id="muf">Signal Noise:</id> ${signalNoise}`;
-            document.getElementById('desc2').innerHTML = `<id id="muf">MUF:</id> ${muf}`;
+                // Mettre à jour le contenu de desc1, desc2 et desc5 avec les valeurs récupérées
+                document.getElementById('desc1').innerHTML = `<id id="muf">Signal Noise:</id> ${signalNoise}`;
+                document.getElementById('desc2').innerHTML = `<id id="muf">MUF:</id> ${muf}`;
+                document.getElementById('desc5').innerHTML = `<id id="muf">Aurora power:</id> G${aurora}`;
 
-            // Mettre à jour les couleurs en fonction de signalNoise et MUF
-            updateColors(signalNoise, muf);
+                // Appeler la fonction pour mettre à jour les couleurs en fonction des valeurs récupérées
+                updateColors(signalNoise, muf, aurora);
 
-            // Récupérer les données pour 80m-40m day et night
-            const bandDay = xmlData.querySelector('band[name="80m-40m"][time="day"]').textContent.trim().toLowerCase();
-            const bandNight = xmlData.querySelector('band[name="80m-40m"][time="night"]').textContent.trim().toLowerCase();
+                // Récupérer et afficher les données pour 80m-40m day et night
+                const bandDay = xmlData.querySelector('band[name="80m-40m"][time="day"]').textContent.trim().toLowerCase();
+                const bandNight = xmlData.querySelector('band[name="80m-40m"][time="night"]').textContent.trim().toLowerCase();
 
-            // Afficher les valeurs récupérées dans la console pour diagnostic
-            console.log("Valeur de bandDay:", bandDay);
-            console.log("Valeur de bandNight:", bandNight);
+                // Mettre à jour desc3 et desc4
+                document.getElementById('desc3').innerHTML = `<id id="muf">80m Day:</id> ${bandDay}`;
+                document.getElementById('desc4').innerHTML = `<id id="muf">80m Night:</id> ${bandNight}`;
 
-            // Mettre à jour le contenu de desc3 pour les données day et desc4 pour night
-            const desc3Element = document.getElementById('desc3');
-            const desc4Element = document.getElementById('desc4');
-
-            desc3Element.innerHTML = `<id id="muf">80m Day:</id> ${bandDay}`;
-            desc4Element.innerHTML = `<id id="muf">80m Night:</id> ${bandNight}`;
-
-            // Appliquer les couleurs pour les bandes day et night
-            applyBandColor(bandDay, desc3Element);
-            applyBandColor(bandNight, desc4Element);
-          })
-          .catch(err => console.error('Erreur lors de la récupération des données:', err));
+                // Appliquer les couleurs aux bandes de jour et de nuit
+                applyBandColor(bandDay, document.getElementById('desc3'));
+                applyBandColor(bandNight, document.getElementById('desc4'));
+            });
     }
 
     // Appel initial pour récupérer les données au chargement de la page
@@ -253,11 +246,11 @@
     // Recharger les données toutes les 60 secondes (60000 millisecondes)
     setInterval(fetchData, 60000);
 
-    // Fonction pour mettre à jour les couleurs en fonction de signalNoise et MUF
-    function updateColors(signalNoise, muf) {
+    // Fonction pour mettre à jour les couleurs en fonction de signalNoise, MUF et Aurora
+    function updateColors(signalNoise, muf, aurora) {
         console.log("Valeur de signalNoise : ", signalNoise); // Pour voir la valeur exacte dans la console
 
-        // Récupérer l'élément desc1
+        // Récupérer l'élément desc1 (signal noise)
         const desc1Element = document.getElementById('desc1');
 
         // Vérifier si l'élément existe bien
@@ -267,20 +260,23 @@
         }
 
         switch (signalNoise.toLowerCase().trim()) {
-            case 's1-s2':
-                desc1Element.style.color = 'yellow';
+            case 's0-s1':
+                desc1Element.style.color = 'cyan';
                 break;
-            case 'S2-S3':
-                desc1Element.style.color = '#FFE754';
+            case 's1-s2':
+                desc1Element.style.color = 'aquamarine';
+                break;
+            case 's2-s3':
+                desc1Element.style.color = 'yellow';
                 break;
             case 's3-s4':
                 desc1Element.style.color = 'orange';
                 break;
             case 's4-s5':
-                desc1Element.style.color = 'red';
+                desc1Element.style.color = 'orangered';
                 break;
             case 's5':
-                desc1Element.style.color = 'darkred';
+                desc1Element.style.color = 'red';
                 break;
             default:
                 desc1Element.style.color = 'white';
@@ -289,18 +285,40 @@
         // Même logique pour desc2 (MUF)
         const desc2Element = document.getElementById('desc2');
         if (desc2Element) {
-            desc2Element.style.color = (muf === 'NoRpt') ? 'lime' : 'orange';
+            desc2Element.style.color = (muf === 'NoRpt') ? 'greenyellow' : 'orange';
+        }
+
+        // Appliquer les couleurs à desc5 (Aurora)
+        const desc5Element = document.getElementById('desc5');
+        switch (parseInt(aurora, 10)) {
+            case 1:
+                desc5Element.style.color = 'lime';
+                break;
+            case 2:
+                desc5Element.style.color = 'yellow';
+                break;
+            case 3:
+                desc5Element.style.color = 'orange';
+                break;
+            case 4:
+                desc5Element.style.color = 'red';
+                break;
+            case 5:
+                desc5Element.style.color = 'darkred';
+                break;
+            default:
+                desc5Element.style.color = 'white'; // Valeur par défaut pour aurora 0 ou autres
         }
     }
 
     // Fonction pour appliquer les couleurs aux bandes en fonction des valeurs poor, fair, good
     function applyBandColor(bandValue, element) {
         if (bandValue === 'poor') {
-            element.style.color = 'red';
+            element.style.color = 'orangered';
         } else if (bandValue === 'fair') {
             element.style.color = 'yellow';
         } else if (bandValue === 'good') {
-            element.style.color = 'lime';
+            element.style.color = 'lawngreen';
         } else {
             element.style.color = 'white'; // Couleur par défaut si aucune valeur ne correspond
         }
