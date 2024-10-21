@@ -7,84 +7,80 @@
   <title>Right infobar</title>
 </head>
 <style type="text/css" media="all">
-  body {
-    background-color: white;
-    color: black;
-  }
-  
-  #ttl, #desc1, #desc2, #desc3, #desc4, img, img#aurora, #info1, footer {
-    z-index: 100;
-    position: absolute;
-    color: white;
-    font-size: 42px;
-    font-weight: bold;
-  }
-  
-  img#font {
-    top: 0px; left: 0px;
-    width: 2000px;
-  }
-  
-  #ttl {
-    font-size: 50px;
-    top: 0px;
-    left: 10px;
-  }
-  
-  #desc1 {
-    top: 90px;
-    font-size: 30px;
-    left: 20px;
-  }
-  
-  #desc2 {
-    top: 130px;
-    font-size: 30px;
-    left: 20px;
-  }
-  
-  img {
-    width: 200px;
-    border: solid red 1px;
-    top: 3px;
-  }
-  
-  img#aurora {
-    left: 2%; 
-    top: 200px;
-    width: 280px; 
-    border-radius: 5px;
-  }
-  
-  #desc3 {
-    font-size: 25px;
-    top: 470px;
-  }
-  
-  #desc4 {
-    top: 510px; 
-    font-size: 40px;
-  }
-  
-  #info1 {
-    top: 580px; 
-    font-size: 25px;
-  }
-  
-  id#autoreload { color: lime; }
-  id#infobar { color: red; }
-  
-  footer {
-    top: 960px; left: 10px;
-    font-size: 18px
-  }
+  body, html {
+                margin: 0;
+                padding: 0;
+            }
+
+            #main {
+                font-family: 'Cantarell';
+            }
+
+            #MSKTime, #dateMSK, #ttl, #desc1, #desc2, #desc3, #desc4, #info1, #shortwaveStuff, #dateUTC, #socialText, #socialImg, #faq, #timer, #clockMSK, #UTCTime, #MSKTime, #fa2q, #aurora, #abt {
+                z-index: 100;
+                position: absolute;
+                color: white;
+                font-size: 42px;
+                font-weight: bold;
+            }
+
+            #abt { left: 10px; top: 10px; font-size: 30px; }
+            #ttl { left: 23px; top: 50px; }
+
+            #desc1 { left: 20px; top: 120px; font-size: 35px; }
+            
+            img#infox { width: 200px; top: 10px; }
+            #desc2 { left: 20px; top: 170px; font-size: 35px; }
+            #aurora { width: 300px; top: 250px; left: 20px; }
+            #desc3 { left: 20px; top: 530px; font-size: 25px; }
+            #desc4 { left: 20px; top: 570px; font-size: 35px; }
+
+            #info1 { left: 30px; top: 630px; font-size: 23px; }
+            #timer { left: 20px; top: 650px; font-size: 30px; }
+
+            #socialImg { left: 30px; top: 975px; font-size: 50px; }
+            #socialText { left: 30px; top: 935px; font-size: 50px; }
+
+            #faq { left: 10px; top: 1035px; font-size: 20.5px; }
+
+            @keyframes fade {
+                0%   { opacity: 1; }
+                100% { opacity: 0; }
+            }
+            #socialText, #socialImg {
+                animation-name: fade;
+                animation-duration: 0.5s;
+                animation-timing-function: cubic-bezier(1,0,0,1);
+            }
+            #socialText, #socialImg { animation-direction: reverse;  }
+            
+            #muf {
+              color: white;
+            }
+            
+            p#fa2q {
+              left: 20px;
+              top: 590px;
+              font-size: 30px;
+              text-decoration: underline
+            }
+            h1#fa2q {
+              left: 20px;
+              top: 520px;
+              font-size: 50px
+            }
+            
+            #currentFrequency { color: dodgerblue; }
+            #autoreload { color: lime }
+            #infobar { color: orangered }
 </style>
 
 <body>
   <img src="thing.png" alt="thing.png" id="font">
+  <h1 id="abt">This infobar is still in development!</h1>
   <h1 id="ttl">Latest Solar Data</h1>
-  <h1 id="desc1">Solar X-Ray: <img src="https://www.n3kl.org/sun/images/status.gif" id="solarXRay"></h1>
-  <h1 id="desc2">Geomagnetic Field: <img src="https://www.n3kl.org/sun/images/kpstatus.gif" id="geomagneticField"></h1>
+  <h1 id="desc1">Solar X-Ray: <img src="https://www.n3kl.org/sun/images/status.gif" id="infox"></h1>
+  <h1 id="desc2">Geomagnetic Field: <img src="https://www.n3kl.org/sun/images/kpstatus.gif" id="infox"></h1>
   <img src="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg" id="aurora">
   <p id="desc3">The information provided is mostly accurate.</p>
   <h1 id="desc4">Current Frequency: <span id="currentFrequency">-- kHz</span></h1>
@@ -93,7 +89,7 @@
     Infobar: 1 <id id="infobar">@ShorwaveStuff</id> & 2 <id id="infobar">@MirossOffYT</id><br>
     Software: Streamlabs using a Xiaomi 11I<br>
     ~ More information in the description ~</p>
- <footer>
+ <footer id="faq">
    Inforbar by MirossOffYT, Inspired by The SWL Channel
  </footer>
   <script>
