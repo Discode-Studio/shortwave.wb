@@ -34,14 +34,17 @@
         }
 
         iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            z-index: 2; /* L'iframe est au-dessus du texte */
-        }
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%; /* Agrandir l'iframe pour permettre plus de détails */
+    height: 300%; /* Ajustez ces valeurs selon l'effet de zoom souhaité */
+    border: none;
+    z-index: 2;
+    transform: scale(0.8); /* Applique un dézoom de 80% */
+    transform-origin: 0 0; /* Ancre le dézoom en haut à gauche */
+}
+
     </style>
 </head>
 <body>
@@ -55,27 +58,21 @@
 
 <script>
     const baseUrls = [
-        "http://kiwi-kuo.aprs.fi:8073/?user=MirossOffYT&f=4625usb&pb=0,3555&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",         // Kuopio aprs.fi
-        "http://oh3aa.dy.fi:18073/?user=MirossOffYT&f=4625usb&pb=0,3555&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",              // OH3AA (Finland)
-        "http://kiwi-vih.aprs.fi:8073/?user=MirossOffYT&f=4625usb&pb=0,3555&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",
-        "http://fsdr.duckdns.org/?user=MirossOffYT&f=4625usb&pb=0,3555&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",,
-        "http://rka.proxy.kiwisdr.com:8073/?user=MirossOffYT&f=4625usb&pb=0,3555&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",
-        "http://oh6hps.ddns.net:8073/?user=MirossOffYT&f=4625usb&pb=0,3555&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",
-        "http://pallas-kiwi.ddns.net:8073/.?user=MirossOffYT&f=4625usb&pb=0,3555&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",
-        "http://sdxl-loh.ddns.net:8073/?user=MirossOffYT&f=4625usb&pb=0,3555&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",
-        "http://g8ure.ddns.net:8075/?user=MirossOffYT&f=4625usb&pb=0,3555&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",
-        "http://21373.proxy.kiwisdr.com:8073/?user=MirossOffYT&f=4625usb&pb=0,3555&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",
-        "https://oh3ac.oh3cyt.com/#freq=4625000,mod=usb,sql=-150"
+        "http://kiwi-kuo.aprs.fi:8073/?user=MirossOffYT&f=4625usb&pb=0,3500&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",         
+        "http://oh3aa.dy.fi:18073/?user=MirossOffYT&f=4625usb&pb=0,3500&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",              
+        "http://kiwi-vih.aprs.fi:8073/?user=MirossOffYT&f=4625usb&pb=0,3500&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",
+        "http://rka.proxy.kiwisdr.com:8073/?user=MirossOffYT&f=4625usb&pb=0,3500&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",
+        "http://sdxl-loh.ddns.net:8073/?user=MirossOffYT&f=4625usb&pb=0,3500&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",
+        "http://g8ure.ddns.net:8075/?user=MirossOffYT&f=4625usb&pb=0,3500&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast",
+        "http://21373.proxy.kiwisdr.com:8073/?user=MirossOffYT&f=4625usb&pb=0,3500&u=Keams_User&no_geoloc&keys=sxyyy&z=12&peak&wf=fast"
     ];
 
     const iframe = document.getElementById('webFrame');
-    const reloadText = document.getElementById('reloadText');
     const reloadInfo = document.getElementById('reloadInfo');
-    const reloadInterval = 1800000; // 30 minutes
     let countdownTimer;
 
     function getRandomId() {
-        return String(Math.floor(Math.random() * 9999) + 1).padStart(2, '0'); // Génère un nombre aléatoire entre 01 et 99
+        return String(Math.floor(Math.random() * 9999) + 1).padStart(2, '0');
     }
 
     async function getCountry() {
@@ -112,10 +109,10 @@
         reloadInfo.innerText = "Loading SDR";
         const randomIndex = Math.floor(Math.random() * baseUrls.length);
         const randomId = getRandomId();
-        const selectedUrl = baseUrls[randomIndex].replace(/u=Keams_User/, `u=Keams_User_${randomId}`); // Ajoute l'ID aléatoire à l'URL
+        const selectedUrl = baseUrls[randomIndex].replace(/u=Keams_User/, `u=Keams_User_${randomId}`);
         
-        const country = await getCountry(); // Récupérer le pays
-        await sendToWebhook(randomId, country, selectedUrl); // Envoyer les informations au webhook
+        const country = await getCountry();
+        await sendToWebhook(randomId, country, selectedUrl);
         iframe.src = selectedUrl;
     }
 
@@ -124,20 +121,44 @@
     };
 
     function startCountdown() {
-        let remainingTime = reloadInterval / 1000; // Convertir en secondes
+        const nextReloadTime = getNextReloadTime();
+        const remainingTime = nextReloadTime - Date.now();
+        
         clearInterval(countdownTimer);
         countdownTimer = setInterval(() => {
-            remainingTime--;
-            reloadInfo.innerText = `Next reload in ${remainingTime} seconds`;
-            if (remainingTime <= 0) {
+            const timeLeft = Math.max(0, Math.floor((nextReloadTime - Date.now()) / 1000));
+            reloadInfo.innerText = `Next reload in ${timeLeft} seconds`;
+
+            if (timeLeft <= 0) {
                 clearInterval(countdownTimer);
-                loadRandomPage(); // Recharger la page à la fin du compte à rebours
+                loadRandomPage(); // Recharger la page
+                startCountdown(); // Redémarrer le compte à rebours pour le prochain intervalle
             }
         }, 1000); // Décompte chaque seconde
     }
 
+    function getNextReloadTime() {
+        const now = new Date();
+        const minutes = now.getUTCMinutes();
+        const seconds = now.getUTCSeconds();
+
+        // Calculer les minutes restantes jusqu'au prochain intervalle de 30 minutes
+        const nextHalfHour = (Math.floor(minutes / 30) + 1) * 30 % 60;
+        const nextReload = new Date(now);
+        nextReload.setUTCMinutes(nextHalfHour);
+        nextReload.setUTCSeconds(0);
+        nextReload.setUTCMilliseconds(0);
+
+        // Si l'heure suivante est déjà passée, ajouter une heure
+        if (nextHalfHour === 0 && minutes >= 30) {
+            nextReload.setUTCHours(now.getUTCHours() + 1);
+        }
+
+        return nextReload.getTime();
+    }
+
     loadRandomPage();
-    setInterval(loadRandomPage, reloadInterval);
+    startCountdown();
 </script>
 
 </body>
