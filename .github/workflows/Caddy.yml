@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - windowsname: Checkout code
+      - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Download rtmp
