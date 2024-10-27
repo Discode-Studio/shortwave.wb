@@ -7,10 +7,10 @@ on:
 
 jobs:
   run-caddy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - windowsname: Checkout code
         uses: actions/checkout@v2
 
       - name: Download rtmp
