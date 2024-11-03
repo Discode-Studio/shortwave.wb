@@ -1,4 +1,4 @@
-name: Run Caddy
+name: 24/7 Stream
 
 on:
   schedule:
