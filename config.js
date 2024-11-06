@@ -1,14 +1,14 @@
 // If you use this please specify multiple kiwis so you don't just camp on a single one!
 // URL format: http://kiwi.com:8073/ - timeout - 24h usage limit (time limits in minutes, null means no limit)
 const kiwilistDay = [
-    { url: "http://okno.ddns.net:8073/", timeout: 24, timelimit: null },
-    { url: "http://188.162.63.103:8073/", timeout: 30, timelimit: 120 },
-    { url: "http://37.33.50.162:8073/", timeout: 30, timelimit: 120 }
+    { url: "http://37.33.50.162:8073/", timeout: 30, timelimit: 120 },
+    { url: "http://kiwi-kuo.aprs.fi:8073/", timeout: 30, timelimit: 120},
+    { url: "http://iz6198swl.proxy.kiwisdr.com:8073/", timeout: 15, timelimit: 120}
 ];
 
 const kiwilistNight = [
     { url: "http://kiwi-kuo.aprs.fi:8073/", timeout: 30, timelimit: 120 },
-    { url: "http://188.162.63.103:8073/", timeout: 30, timelimit: 120 },
+    { url: "http://iz6198swl.proxy.kiwisdr.com:8073/", timeout: 15, timelimit: 120},
     { url: "http://warszawa.proxy.kiwisdr.com:8073/", timeout: 120, timelimit: 120 },
 ];
 
@@ -16,13 +16,13 @@ const reloadMinutes = 25; // max time until next reload after finding a receiver
 const retryMinutes = 1; // time until retrying when finding a suitable receiver failed 
 
 const kiwiConfig = {
-    freq: "4770",
+    freq: "3623",
     mode: "usb",
     zoom: "12",
     startPass: "0",
-    endPass: "4000",
+    endPass: "3550",
     colormap: "4",
-    volume: "180&keys=x",
+    volume: "180&keys=xyyy",
 };
 
 const config = {
