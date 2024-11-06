@@ -8,7 +8,6 @@ const kiwilistDay = [
 
 const kiwilistNight = [
     { url: "http://kiwi-kuo.aprs.fi:8073/", timeout: 30, timelimit: 120 },
-    { url: "http://iz6198swl.proxy.kiwisdr.com:8073/", timeout: 15, timelimit: 120},
     { url: "http://warszawa.proxy.kiwisdr.com:8073/", timeout: 120, timelimit: 120 },
 ];
 
