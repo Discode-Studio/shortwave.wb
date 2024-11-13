@@ -2,13 +2,22 @@
 // URL format: http://kiwi.com:8073/ - timeout - 24h usage limit (time limits in minutes, null means no limit)
 const kiwilistDay = [
     { url: "http://37.33.50.162:8073/", timeout: 30, timelimit: 120 },
-    { url: "http://kiwi-kuo.aprs.fi:8073/", timeout: 30, timelimit: 120},
-    { url: "http://iz6198swl.proxy.kiwisdr.com:8073/", timeout: 15, timelimit: 120}
+    { url: "http://kiwi-kuo.aprs.fi:8073/", timeout: 30, timelimit: 120 },
+    { url: "http://iz6198swl.proxy.kiwisdr.com:8073/", timeout: 15, timelimit: 120 },
+    { url: "http://oh3aa.dy.fi:18073/", timeout: 60, timelimit: 120 },
+    { url: "http://sdxl-loh.ddns.net:8073/", timeout: 120, timelimit: null },
+    { url: "http://sauna.psokiwi.net:8073/", timeout: 30, timelimit: 120 },
+    { url: "http://pallas-kiwi.ddns.net:8073/", timeout: 45, timelimit: 200 }
 ];
 
 const kiwilistNight = [
+    { url: "http://37.33.50.162:8073/", timeout: 30, timelimit: 120 },
     { url: "http://kiwi-kuo.aprs.fi:8073/", timeout: 30, timelimit: 120 },
-    { url: "http://warszawa.proxy.kiwisdr.com:8073/", timeout: 120, timelimit: 120 },
+    { url: "http://iz6198swl.proxy.kiwisdr.com:8073/", timeout: 15, timelimit: 120 },
+    { url: "http://oh3aa.dy.fi:18073/", timeout: 60, timelimit: 120 },
+    { url: "http://sdxl-loh.ddns.net:8073/", timeout: 120, timelimit: null },
+    { url: "http://sauna.psokiwi.net:8073/", timeout: 30, timelimit: 120 },
+    { url: "http://pallas-kiwi.ddns.net:8073/", timeout: 45, timelimit: 200 }
 ];
 
 const reloadMinutes = 25; // max time until next reload after finding a receiver
