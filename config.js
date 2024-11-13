@@ -15,11 +15,11 @@ const reloadMinutes = 25; // max time until next reload after finding a receiver
 const retryMinutes = 1; // time until retrying when finding a suitable receiver failed 
 
 const kiwiConfig = {
-    freq: "3623",
+    freq: "4625",
     mode: "usb",
     zoom: "12",
     startPass: "0",
-    endPass: "3550",
+    endPass: "3700",
     colormap: "4",
     volume: "180&keys=xyyy",
 };
