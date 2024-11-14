@@ -27,7 +27,7 @@ const kiwiConfig = {
     zoom: "12",
     startPass: "0",
     endPass: "3700",
-    colormap: "4",
+    colormap: "1",
     volume: "180&keys=xyyy",
 };
 
