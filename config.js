@@ -1,7 +1,6 @@
 // If you use this please specify multiple kiwis so you don't just camp on a single one!
 // URL format: http://kiwi.com:8073/ - timeout - 24h usage limit (time limits in minutes, null means no limit)
 const kiwilistDay = [
-    { url: "http://37.33.50.162:8073/", timeout: 30, timelimit: 120 },
     { url: "http://kiwi-kuo.aprs.fi:8073/", timeout: 30, timelimit: 120 },
     { url: "http://oh3aa.dy.fi:18073/", timeout: 60, timelimit: 120 },
     { url: "http://sdxl-loh.ddns.net:8073/", timeout: 120, timelimit: null },
@@ -10,7 +9,6 @@ const kiwilistDay = [
 ];
 
 const kiwilistNight = [
-    { url: "http://37.33.50.162:8073/", timeout: 30, timelimit: 120 },
     { url: "http://kiwi-kuo.aprs.fi:8073/", timeout: 30, timelimit: 120 },
     { url: "http://oh3aa.dy.fi:18073/", timeout: 60, timelimit: 120 },
     { url: "http://sdxl-loh.ddns.net:8073/", timeout: 120, timelimit: null },
