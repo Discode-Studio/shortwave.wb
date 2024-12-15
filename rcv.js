@@ -3,7 +3,7 @@ let kiwiData = [];
         let openWebRXData = [];
 
         async function fetchKiwiSDR() {
-            const response = await fetch('http://kiwisdr.com/public/');
+            const response = await fetch('https://api.codetabs.com/v1/proxy/?quest=http://kiwisdr.com/public/');
             const data = await response.text();
             const parser = new DOMParser();
             const doc = parser.parseFromString(data, 'text/html');
@@ -59,7 +59,7 @@ let kiwiData = [];
         function createSDRDiv(name, sdrHw, users, link) {
             const sdrDiv = document.createElement('div');
             sdrDiv.classList.add('sdr-item');
-            sdrDiv.innerHTML = `<img src="http://kiwisdr.com/kiwi/kiwi-avatar.png" alt="KiwiSDR Avatar">
+            sdrDiv.innerHTML = `<img src="https://api.codetabs.com/v1/proxy/?quest=http://kiwisdr.com/kiwi/kiwi-avatar.png" alt="KiwiSDR Avatar">
                                 <button onclick="openModal('${link}')">${name} (${sdrHw}) - Users: ${users}</button>`;
             return sdrDiv;
         }
